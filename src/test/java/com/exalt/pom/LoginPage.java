@@ -6,11 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.log4testng.Logger;
 
-public class RitajLoginPage {
+public class LoginPage {
 
-   private WebDriver webDriver;
+    private WebDriver webDriver;
     /*
     Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
      a list of elements. Used in conjunction with PageFactory this allows users to quickly and easily create PageObjects
@@ -24,7 +23,7 @@ public class RitajLoginPage {
     @FindBy(how = How.CSS, using = ".btn")
     WebElement submitButton;
 
-    public RitajLoginPage(WebDriver webDriver) {
+    public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         //This initElements method will create all WebElements
         PageFactory.initElements(webDriver, this);

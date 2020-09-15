@@ -10,7 +10,6 @@ import org.testng.Assert;
 public final class ActionsFinder<T> {
 
     private static WebDriver webDriver = BrowserFactory.getWebDriver();
-    private static Actions actions = new Actions(webDriver);
 
     public static void click(@NotNull WebElement webElement) {
         webElement.click();
@@ -40,6 +39,7 @@ public final class ActionsFinder<T> {
     Performs double click on the element
      */
     public static void doubleClick(WebElement webElement) {
+        Actions actions = new Actions(webDriver);
         actions.doubleClick(webElement).perform();
     }
 
@@ -47,6 +47,7 @@ public final class ActionsFinder<T> {
     Shifts the mouse pointer to the center of the element
      */
     public static void moveToElement(WebElement webElement) {
+        Actions actions = new Actions(webDriver);
         actions.moveToElement(webElement).perform();
     }
 
@@ -54,7 +55,8 @@ public final class ActionsFinder<T> {
      Performs right-click on the mouse
      */
     public static void contextClick(WebElement webElement) {
-        actions.contextClick(webElement).perform();
+        Actions actions = new Actions(webDriver);
+        actions.contextClick(webElement);
     }
 
     public static void assertFalse(boolean element) {
