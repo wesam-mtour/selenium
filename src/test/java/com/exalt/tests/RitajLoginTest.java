@@ -9,19 +9,23 @@ import org.testng.annotations.Test;
 
 public class RitajLoginTest {
 
+    final String WEB_DRIVER_KEY = "webdriver.chrome.driver";
+    final String WEB_DRIVER_VALUE = "C:\\Users\\wesamM\\Downloads\\chromedriver.exe";
+    final String BROWSER_NAME = "chrome";
+    final String WEB_DRIVER_URL = "https://senglehardt.com/demo/no_boundaries/loginmanager/";
     private WebDriver webDriver;
     private RitajLoginPage ritajLoginPage;
 
     @BeforeTest
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\WesamM\\Downloads\\chromedriver.exe");
-        webDriver = BrowserFactory.startWebDriver("chrome", "https://ritaj.birzeit.edu/register/?return%5furl=%2f");
+        System.setProperty(WEB_DRIVER_KEY, WEB_DRIVER_VALUE);
+        webDriver = BrowserFactory.startWebDriver(BROWSER_NAME, WEB_DRIVER_URL);
     }
 
     @Test
     public void UserLoginTest() {
         ritajLoginPage = new RitajLoginPage(webDriver);
-        ritajLoginPage.loginWithNameAndPass("1160508", "radeee19867");
+        ritajLoginPage.loginWithNameAndPass("wesam@wesam.com", "wesam");
         webDriver.quit();
     }
 }

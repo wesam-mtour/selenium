@@ -3,30 +3,25 @@ package com.exalt.pom;
 import com.exalt.infra.ActionsFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.log4testng.Logger;
 
-import java.lang.reflect.AccessibleObject;
-import java.util.concurrent.TimeUnit;
-
 public class RitajLoginPage {
 
-    WebDriver webDriver;
-    Logger logger = Logger.getLogger(RitajLoginPage.class);
+   private WebDriver webDriver;
     /*
     Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
      a list of elements. Used in conjunction with PageFactory this allows users to quickly and easily create PageObjects
      */
-    @FindBy(how = How.NAME, using = "username")
+    @FindBy(how = How.ID, using = "demo-email")
     WebElement userName;
 
-    @FindBy(how = How.NAME, using = "password")
+    @FindBy(how = How.ID, using = "demo-pwd")
     WebElement userPassword;
 
-    @FindBy(how = How.NAME, using = "formbutton:ok")
+    @FindBy(how = How.CSS, using = ".btn")
     WebElement submitButton;
 
     public RitajLoginPage(WebDriver webDriver) {
@@ -37,16 +32,9 @@ public class RitajLoginPage {
 
     public void loginWithNameAndPass(String uid, String password) {
         ActionsFinder.sendKeys(userName, uid);
-        ActionsFinder.assertEquals(userName,"1160508");
-
-
-
-        Actions a =new Actions(webDriver);
-        a.contextClick(userName).perform();
-
-
+        ActionsFinder.assertEquals(userName, "wesam@wesam.com");
         ActionsFinder.sendKeys(userPassword, password);
-
+        ActionsFinder.contextClick(submitButton);
         ActionsFinder.click(submitButton);
     }
 }

@@ -21,8 +21,4 @@ public class BrowserFactory {
     public static WebDriver getWebDriver() {
         return webDriver;
     }
-
-    public static void setWebDriver(WebDriver webDriver) {
-        BrowserFactory.webDriver = webDriver;
-    }
 }
