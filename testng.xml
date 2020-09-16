@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
+<suite name="All Test Suite" parallel="classes" thread-count="2">
     <test verbose="2" preserve-order="true"
           name="C:/Users/WesamM/Desktop/automation-project/src/test/java/com/exalt/tests/RitajLoginTest.java">
         <classes>
-            <class name="com.exalt.tests.RitajLoginTest">
-                <methods>
-                    <include name="UserLoginTest"/>
-                </methods>
-            </class>
+            <class name="com.exalt.tests.LoginWithChromeTest"/>
+            <class name="com.exalt.tests.LoginWithFirefoxTest"/>
         </classes>
     </test>
 </suite>
