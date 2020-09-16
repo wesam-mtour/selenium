@@ -9,9 +9,6 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.log4testng.Logger;
 
-import java.lang.reflect.AccessibleObject;
-import java.util.concurrent.TimeUnit;
-
 public class RitajLoginPage {
 
     WebDriver webDriver;
@@ -31,17 +28,17 @@ public class RitajLoginPage {
 
     public RitajLoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+
         //This initElements method will create all WebElements
         PageFactory.initElements(webDriver, this);
     }
 
     public void loginWithNameAndPass(String uid, String password) {
         ActionsFinder.sendKeys(userName, uid);
-        ActionsFinder.assertEquals(userName,"1160508");
+        ActionsFinder.assertEquals(userName, "1160508");
 
 
-
-        Actions a =new Actions(webDriver);
+        Actions a = new Actions(webDriver);
         a.contextClick(userName).perform();
 
 
