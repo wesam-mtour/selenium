@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="classes" thread-count="2">
-    <test verbose="2" preserve-order="true"
-          name="C:/Users/WesamM/Desktop/automation-project/src/test/java/com/exalt/tests/RitajLoginTest.java">
+<suite name="All Test Suite" parallel="tests" >
+    <test name="ChromeTest ">
+        <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.LoginWithChromeTest"/>
-            <class name="com.exalt.tests.LoginWithFirefoxTest"/>
+            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
+        </classes>
+    </test>
+    <test name="FirefoxTest ">
+        <parameter name="browser" value="Firefox"></parameter>
+        <classes>
+            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
         </classes>
     </test>
 </suite>

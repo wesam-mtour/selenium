@@ -29,7 +29,7 @@ public class LoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void loginWithNameAndPass(String uid, String password) {
+    public void loginWithNameAndPass(String uid, String password) throws InterruptedException {
         ActionsFinder.sendKeys(userName, uid);
         ActionsFinder.assertEquals(userName, "wesam@wesam.com");
         ActionsFinder.sendKeys(userPassword, password);
