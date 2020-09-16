@@ -57,10 +57,13 @@ public class BrowserFactory {
             default:
                 System.out.println("Browser not Found ");
         }
-        webDriver.get(url);
+        openUrl(url);
         return webDriver;
     }
 
+    private static void openUrl(String url) {
+        webDriver.get(url);
+    }
 
     public static WebDriver getWebDriver() {
         return webDriver;
