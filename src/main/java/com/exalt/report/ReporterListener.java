@@ -12,6 +12,9 @@ import java.util.Map;
 
 public class ReporterListener implements IReporter {
     static List details = new ArrayList<String>();
+    static List methodsPassed = new ArrayList<String>();
+    static List methodsSkipped = new ArrayList<String>();
+
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         for (ISuite suite : suites) {
@@ -36,11 +39,22 @@ public class ReporterListener implements IReporter {
 
     public static void writeResults() {
         try {
-            String reportIn = new String(Files.readAllBytes(Paths.get("C:\\Users\\WesamM\\Desktop\\automation-project\\r.html")));
+            String reportIn = new String(Files.readAllBytes(Paths.get("C:\\Users\\wesamM\\Desktop\\selenium\\r.html")));
             for (int i = 0; i < details.size(); i++) {
-                reportIn = reportIn.concat("<br><tr><td>" + Integer.toString(i + 1) + "</td><td>" + details.get(i) + "</td><td>" + details.get(i) + "</td></tr>" + "\n");
+                reportIn = reportIn.concat(
+                        "<tr>" +
+                                "<td>" +
+                                "        <td width=\"5%\">Ttttotal Time</td>\n" + "\n" + "    \n" +
+                                "    </tr>\n" +
+                                "    \n" +
+                                "</table>\n" +
+                                "<br>\n" +
+                                "\n" +
+                                "\n" +
+                                "</body>\n" +
+                                "</html>\n");
             }
-            String reportPath = "C:\\Users\\WesamM\\Desktop\\automation-project\\rr" + ".html";
+            String reportPath = "C:\\Users\\wesamM\\Desktop\\selenium\\rr.html";
             Files.write(Paths.get(reportPath), reportIn.getBytes(), StandardOpenOption.CREATE);
 
         } catch (Exception e) {
