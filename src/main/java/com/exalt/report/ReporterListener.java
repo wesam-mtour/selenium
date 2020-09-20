@@ -15,7 +15,9 @@ import java.util.Map;
 
 public class ReporterListener implements IReporter {
     final String SUITE_REPORT_PATH = "Suite Report.html";
-    final String TESTS_REPORT_PATH = "Test Report.html";
+    final String SUMMARY_REPORT_PATH = "Summary Report.html";
+    final String PASSED_TESTS_REPORT_PATH = "Passed Tests Report.html";
+
     int totalNumberOfPassedMethods = 0;
     int totalNumberOfFailedMethods = 0;
     int totalNumberOfSkippedMethods = 0;
@@ -35,15 +37,16 @@ public class ReporterListener implements IReporter {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
             for (ISuiteResult sr : suiteResults.values()) {
                 ITestContext tc = sr.getTestContext();
-
                 checkAllMethodsAcceptance(tc);
                 /*
                 To add new row in the test report table
                  */
-                addRowToTestsReport(sr, tc);
+                addRowToSummaryReport(sr, tc);
+                if (totalNumberOfFailedTests>0){
+                addRowToPassedTestReport(sr, tc);
+                }
             }
         }
-
         /*
         To check the type of tests "parallel or not"
          */
@@ -103,24 +106,44 @@ public class ReporterListener implements IReporter {
         }
     }
 
-
-    private void addRowToTestsReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
+    private void addRowToPassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
         totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
         totalNumberOfFailedMethods += tc.getFailedTests().getAllResults().size();
         totalNumberOfSkippedMethods += tc.getSkippedTests().getAllResults().size();
+        String testName = sr.toString().substring(21, sr.toString().length() - 1);
         testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
-        TestsReport.concat(
+
+        PassedTestsReport.concat(
                 "<tr>" +
-                        "<td>" + sr.toString().substring(21, sr.toString().length() - 1) + "</td>" +
+                        "<td>" + testName + "</td>" +
+                        "<td style=\"background-color:yellowgreen;color:black;font-weight: bold;\">" + tc.getPassedTests().getAllResults().size() + "</td>" +
+                        "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
+                        "</tr>");
+    }
+    private void addRowToSummaryReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
+        totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
+        totalNumberOfFailedMethods += tc.getFailedTests().getAllResults().size();
+        totalNumberOfSkippedMethods += tc.getSkippedTests().getAllResults().size();
+        String testName = sr.toString().substring(21, sr.toString().length() - 1);
+        testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
+        SummaryReport.concat(
+                "<tr>" +
+                        "<td>" + testName + "</td>" +
                         "<td style=\"background-color:yellowgreen;color:black;font-weight: bold;\">" + tc.getPassedTests().getAllResults().size() + "</td>" +
                         "<td style=\"background-color:red;color:black;font-weight: bold;\">" + tc.getFailedTests().getAllResults().size() + "</td>" +
                         "<td style=\"background-color:yellow;color:black;font-weight: bold;\">" + tc.getSkippedTests().getAllResults().size() + "</td>" +
-                        "<td style=\"color:black;font-weight: bold;\">" + ((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0) + "</td>" +
+                        "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
+                        "</tr>");
+        PassedTestsReport.concat(
+                "<tr>" +
+                        "<td>" + testName + "</td>" +
+                        "<td style=\"background-color:yellowgreen;color:black;font-weight: bold;\">" + tc.getPassedTests().getAllResults().size() + "</td>" +
+                        "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
                         "</tr>");
     }
 
     private void writeAsParallelTest() {
-        TestsReport.concat(
+        SummaryReport.concat(
                 "<tr>" +
                         "<td style=\"color:black;font-weight:bold;\">" + "Total" + "</td>" +
                         "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfPassedMethods + "</td>" +
@@ -131,7 +154,7 @@ public class ReporterListener implements IReporter {
     }
 
     private void writeAsSequentialTest() {
-        TestsReport.concat(
+        SummaryReport.concat(
                 "<tr>" +
                         "<td style=\"color:black;font-weight:bold;\">" + "Total" + "</td>" +
                         "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfPassedMethods + "</td>" +
@@ -143,9 +166,9 @@ public class ReporterListener implements IReporter {
 
     private void fileOverwriting() {
         try {
+            Files.write(Paths.get(PASSED_TESTS_REPORT_PATH), PassedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
             Files.write(Paths.get(SUITE_REPORT_PATH), SuiteReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-            Files.write(Paths.get(TESTS_REPORT_PATH), TestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-
+            Files.write(Paths.get(SUMMARY_REPORT_PATH), SummaryReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
         }

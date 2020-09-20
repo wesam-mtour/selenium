@@ -1,8 +1,8 @@
 package com.exalt.report;
 
-public class TestsReport {
+public class PassedTestsReport {
 
-   static private String code =
+    static private String code =
             "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
@@ -20,22 +20,21 @@ public class TestsReport {
                     "<table style=\"width:60%\">" +
                     "    <tr>" +
                     "        <td style=\"font-weight: bold;\" width=\"5%\">Tests</td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\">MethodsPassed</td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\"># skipped</td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\"># failed</td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\">Methods Passed</td>" +
                     "        <td style=\"font-weight: bold;\" width=\"5%\">Total Time</td>" +
                     "    </tr>";
 
     public static String getCode() {
         return code;
     }
+
     public static String concat(String addedCode) {
-        TestsReport.code = TestsReport.code.concat(addedCode);
+        PassedTestsReport.code = PassedTestsReport.code.concat(addedCode);
         return getCode();
     }
 
     public static String concatEndTags() {
-        TestsReport.code = TestsReport.code.concat(
+        PassedTestsReport.code = PassedTestsReport.code.concat(
                 "</table>" +
                         "<br>" +
                         "</body>" +
