@@ -1,13 +1,12 @@
 package com.exalt.tests;
 
-import com.exalt.pom.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class temp {
+public class Demo {
 
     @Test
-    public void tempmethod() throws InterruptedException {
+    public void demoTest() throws InterruptedException {
         Assert.assertTrue(false);
     }
 }

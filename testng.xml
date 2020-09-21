@@ -8,7 +8,6 @@
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
             <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
-            <class name="com.exalt.tests.temp"></class>
 
         </classes>
     </test>
@@ -16,6 +15,8 @@
         <parameter name="browser" value="Firefox"></parameter>
         <classes>
             <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
+            <class name="com.exalt.tests.Demo"></class>
+
         </classes>
     </test>
 </suite>

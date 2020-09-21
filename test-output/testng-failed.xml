@@ -4,14 +4,14 @@
   <listeners>
     <listener class-name="com.exalt.report.ReporterListener"/>
   </listeners>
-  <test thread-count="2" name="ChromeTest (failed)" parallel="tests">
-    <parameter name="browser" value="Chrome"/>
+  <test thread-count="2" name="FirefoxTest (failed)" parallel="tests">
+    <parameter name="browser" value="Firefox"/>
     <classes>
-      <class name="com.exalt.tests.temp">
+      <class name="com.exalt.tests.Demo">
         <methods>
-          <include name="tempmethod"/>
+          <include name="demoTest"/>
         </methods>
-      </class> <!-- com.exalt.tests.temp -->
+      </class> <!-- com.exalt.tests.Demo -->
     </classes>
-  </test> <!-- ChromeTest (failed) -->
+  </test> <!-- FirefoxTest (failed) -->
 </suite> <!-- Failed suite [Selenium project ] -->

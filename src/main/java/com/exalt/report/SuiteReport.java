@@ -2,6 +2,7 @@ package com.exalt.report;
 
 public class SuiteReport {
     final static String TEST_REPORT_URL = "http://localhost:63342/automation-project/Passed%20Tests%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
+    final static String SUMMARY_REPORT_URL = "http://localhost:63342/automation-project/Summary%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
 
     static private String code =
             "<!DOCTYPE html>" +
@@ -39,9 +40,10 @@ public class SuiteReport {
     public static String concatEndTags() {
         SuiteReport.code = SuiteReport.code.concat(
                 "</table>" +
-                "<br>" +
-                "</body>" +
-                "</html>"
+                        "<br>" +
+                        "<h><a href=\"" + SUMMARY_REPORT_URL + "\"\" target=\"_blank\">Back to summary report </a></h>\n" +
+                        "</body>" +
+                        "</html>"
         );
         return getCode();
     }
