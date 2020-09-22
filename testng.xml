@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium project " parallel="tests" thread-count="2">
-    <listeners>
-        <listener class-name="com.exalt.report.ReporterListener"/>
-    </listeners>
-    <test name="ChromeTest ">
+<suite name="Selenium project">
+    <test name="conduit test ">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
-
-        </classes>
-    </test>
-    <test name="FirefoxTest ">
-        <parameter name="browser" value="Firefox"></parameter>
-        <classes>
-            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
-            <class name="com.exalt.tests.Demo"></class>
-
+            <class name="com.exalt.tests.ConduitLoginPageTest"></class>
         </classes>
     </test>
 </suite>

@@ -16,7 +16,7 @@ public class MethodsReport {
                     "    </style>" +
                     "</head>" +
                     "<body>" +
-                    "<p style=\"text-indent: 500px\">TESTS RESULTS</p>" +
+                    "<p style=\"text-indent: 500px\">TESTS METHODS</p>" +
                     "<br>" +
                     "<table style=\"width:60%\">" +
                     "    <tr>" +

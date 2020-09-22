@@ -17,7 +17,7 @@ public class PassedTestsReport {
                     "    </style>" +
                     "</head>" +
                     "<body>" +
-                    "<p style=\"text-indent: 500px\">TESTS RESULTS</p>" +
+                    "<p style=\"text-indent: 500px\">PASSED TESTS</p>" +
                     "<br>" +
                     "<table style=\"width:60%\">" +
                     "    <tr>" +

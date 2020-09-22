@@ -15,7 +15,7 @@ public class SummaryReport {
                     "    </style>" +
                     "</head>" +
                     "<body>" +
-                    "<p style=\"text-indent: 500px\">TESTS RESULTS</p>" +
+                    "<p style=\"text-indent: 500px\">Summary Report</p>" +
                     "<br>" +
                     "<table style=\"width:60%\">" +
                     "    <tr>" +
