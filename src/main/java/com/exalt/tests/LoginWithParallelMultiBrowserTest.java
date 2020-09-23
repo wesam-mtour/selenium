@@ -1,7 +1,7 @@
 package com.exalt.tests;
 
 
-import com.exalt.pom.BrowserFactory;
+import com.exalt.webdriverinitializer.BrowserFactory;
 
 import com.exalt.pom.LoginPage;
 import org.openqa.selenium.WebDriver;

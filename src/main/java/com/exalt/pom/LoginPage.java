@@ -1,6 +1,6 @@
 package com.exalt.pom;
 
-import com.exalt.infra.ActionsFinder;
+import com.exalt.actionsinfra.ActionsFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
