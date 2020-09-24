@@ -1,4 +1,4 @@
-package com.exalt.reports.generatedreports;
+package com.exalt.report.generatedreports;
 
 public class PassedTestsReport {
     final static String SUMMARY_REPORT_URL = "http://localhost:63342/automation-project/test-output/Summary%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";

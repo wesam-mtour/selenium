@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.time.Duration;
+
 public final class ActionsFinder<T> {
 
     private static WebDriver webDriver = BrowserFactory.getWebDriver();
@@ -49,6 +51,7 @@ public final class ActionsFinder<T> {
     Performs double click on the element
      */
     public static void doubleClick(WebElement webElement) {
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(webDriver);
         actions.doubleClick(webElement).perform();
     }
@@ -57,6 +60,7 @@ public final class ActionsFinder<T> {
     Shifts the mouse pointer to the center of the element
      */
     public static void moveToElement(WebElement webElement) {
+        wait.until(ExpectedConditions.visibilityOf(webElement));
         Actions actions = new Actions(webDriver);
         actions.moveToElement(webElement).perform();
     }
@@ -65,11 +69,13 @@ public final class ActionsFinder<T> {
      Performs right-click on the mouse
      */
     public static void contextClick(WebElement webElement) {
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(webDriver);
         actions.contextClick(webElement);
     }
 
     public static void assertFalse(boolean element) {
+        // wait.until(Exp)
         Assert.assertFalse(element);
     }
 
@@ -101,5 +107,7 @@ public final class ActionsFinder<T> {
         return webDriver.getTitle();
     }
 
-
+    public static void waitTitleToBe(String expectedTitle) {
+        wait.until(ExpectedConditions.titleIs(expectedTitle));
+    }
 }

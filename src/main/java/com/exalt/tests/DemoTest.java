@@ -6,7 +6,11 @@ import org.testng.annotations.Test;
 public class DemoTest {
 
     @Test
-    public void demoTest() {
-        Assert.assertTrue(true);
+    public void demoTesttestest() {
+        Assert.assertTrue(false);
+    }
+    @Test
+    public void demoTesttestest2() {
+        Assert.assertTrue(false);
     }
 }

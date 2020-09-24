@@ -8,9 +8,8 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class ConduitLoginPage {
 
@@ -40,6 +39,9 @@ public class ConduitLoginPage {
         ActionsFinder.sendKeys(this.email, email);
         ActionsFinder.sendKeys(this.password, password);
         ActionsFinder.click(signInButton);
+       // ActionsFinder.waitTitleToBe("Home — Conduit");
+        WebDriverWait wait = new WebDriverWait(webDriver, 5);
+         wait.until(ExpectedConditions.titleIs("Home — Conduit"));
         String currentUrl = webDriver.getCurrentUrl();
         ActionsFinder.assertEquals(currentUrl, "https://demo.productionready.io/#/");
     }

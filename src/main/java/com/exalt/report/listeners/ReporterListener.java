@@ -1,26 +1,26 @@
 package com.exalt.report.listeners;
 
-import com.exalt.reports.generatedreports.MethodsReport;
-import com.exalt.reports.generatedreports.PassedTestsReport;
-import com.exalt.reports.generatedreports.SuiteReport;
-import com.exalt.reports.generatedreports.SummaryReport;
+import com.exalt.dataproviderinfra.datareader.ConduitLoginPageDataReader;
+import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
+import org.testng.internal.TestResult;
+import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
+import org.testng.xml.XmlTest;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ReporterListener implements IReporter {
+    final static String FAILED_TESTS_REPORT_URL = "http://localhost:63342/automation-project/test-output/Failed%20Tests%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
     final String SUITE_REPORT_PATH = "test-output\\Suite Report.html";
     final String SUMMARY_REPORT_PATH = "test-output\\Summary Report.html";
     final String PASSED_TESTS_REPORT_PATH = "test-output\\Passed Tests Report.html";
+    final String FAILED_TESTS_REPORT_PATH = "test-output\\Failed Tests Report.html";
     final String METHODS_REPORT_URL = "test-output\\Methods Report.html";
 
     int totalNumberOfPassedMethods = 0;
@@ -35,6 +35,8 @@ public class ReporterListener implements IReporter {
     /*
     To read the infrastructure report
      */
+    ITestNGMethod[] a = new ITestNGMethod[0];
+
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         for (ISuite suite : suites) {
@@ -45,17 +47,19 @@ public class ReporterListener implements IReporter {
                 /*
                 Check the success of all methods for this test
                  */
-                checkAllMethodsAcceptance(tc);
+                //   checkAllMethodsAcceptance(tc);
                 /*
                 To add new row in the test report table
                  */
                 addRowToSummaryReport(sr, tc);
+                addRowToFailedTestReport(sr, tc);
+
                 /*
                 If there are no failed methods for this test then it should be added to passed report and Methods Report
                  */
                 if (tc.getFailedTests().size() == 0) {
-                    addRowToPassedTestReport(sr, tc);
-                    addRowToMethodsReport(sr, tc);
+                    //addRowToPassedTestReport(sr, tc);
+                    //addRowToMethodsReport(sr, tc);
                 }
 
             }
@@ -65,14 +69,14 @@ public class ReporterListener implements IReporter {
          */
         if (!(xmlSuites.get(0).getParallel().name().equals("NONE"))) {
             parallel = true;
-            writeAsParallelTest();
+            //writeAsParallelTest();
         } else {
-            writeAsSequentialTest();
+            // writeAsSequentialTest();
         }
         /*
          To add new row in the suite report table
          */
-        addRowToSuiteReport();
+        // addRowToSuiteReport();
         /*
         Print all reports permanently
          */
@@ -91,7 +95,7 @@ public class ReporterListener implements IReporter {
 
     private void addRowToMethodsReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
         String testName = sr.toString().substring(21, sr.toString().length() - 1);
-      //  testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
+        //  testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
         for (ITestNGMethod iResultMap : tc.getAllTestMethods())
             MethodsReport.concat(
                     "<tr>" +
@@ -136,7 +140,7 @@ public class ReporterListener implements IReporter {
 
     private void addRowToPassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
         String testName = sr.toString().substring(21, sr.toString().length() - 1);
-       // testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
+        // testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
         PassedTestsReport.concat(
                 "<tr>" +
                         "<td>" + testName + "</td>" +
@@ -144,6 +148,41 @@ public class ReporterListener implements IReporter {
                         "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
                         "</tr>");
     }
+
+    private void addRowToFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
+        String testName = sr.toString().substring(21, sr.toString().length() - 1);
+//
+//        XmlTest classes = tc.getCurrentXmlTest();
+//        for (XmlClass xmlClass : classes.getClasses()) {
+
+
+        for (XmlClass xmlTest: tc.getCurrentXmlTest().getClasses()){
+        }
+        for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
+            testResult.getTestClass();
+            testResult.getName();
+            IClass ii = testResult.getTestClass();
+            Object[] aa = testResult.getParameters();
+            FailedTestsReport.concat(
+                    "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                            "<table style=\"width:100%\">" +
+                            "<tr>" +
+                            "<th>Test Name</th>" +
+                            "<th>Test Case</th>" +
+                            "<th>Test Case Number </th>" +
+                            "<th>Reason </th>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>"+testResult.getName()+"</th>" +
+                            "<td>"+ConduitLoginPageDataReader.testCases.get(0)+"</th>" +
+                            "<td>"+0+" </th>" +
+                            "<td>"+testResult.getThrowable()+" </th>" +
+                            "</tr>" +
+                            "</table>");
+
+        }
+    }
+
 
     private void addRowToSummaryReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
         totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
@@ -153,11 +192,24 @@ public class ReporterListener implements IReporter {
         testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
         SummaryReport.concat(
                 "<tr>" +
-                        "<td>" + testName + "</td>" +
-                        "<td style=\"background-color:yellowgreen;color:black;font-weight: bold;\">" + tc.getPassedTests().getAllResults().size() + "</td>" +
-                        "<td style=\"background-color:red;color:black;font-weight: bold;\">" + tc.getFailedTests().getAllResults().size() + "</td>" +
-                        "<td style=\"background-color:yellow;color:black;font-weight: bold;\">" + tc.getSkippedTests().getAllResults().size() + "</td>" +
-                        "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
+                        "<td>Number of suites</td>" +
+                        "<td>11 wrong</td> " +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>All Tests</td>" +
+                        "<td>" + (totalNumberOfFailedMethods + totalNumberOfPassedMethods) + "</td>" +
+                        "</tr>" +
+                        "<tr> " +
+                        "<td><a href=\"" + FAILED_TESTS_REPORT_URL + "\" target=\"_blank\">Passed Tests</a></td>" +
+                        "<td>" + totalNumberOfPassedMethods + "</td>" +
+                        "</tr>" +
+                        "<tr> " +
+                        "<td><a href=\"" + FAILED_TESTS_REPORT_URL + "\" target=\"_blank\">Failed Tests</a></td>" +
+                        "<td>" + totalNumberOfFailedMethods + "</td>" +
+                        "</tr>" +
+                        "<tr> " +
+                        "<td>Skipped Tests</td>" +
+                        "<td>" + totalNumberOfSkippedMethods + "</td>" +
                         "</tr>");
     }
 
@@ -185,6 +237,7 @@ public class ReporterListener implements IReporter {
 
     private void fileOverwriting() {
         try {
+            Files.write(Paths.get(FAILED_TESTS_REPORT_PATH), FailedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
             Files.write(Paths.get(METHODS_REPORT_URL), MethodsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
             Files.write(Paths.get(PASSED_TESTS_REPORT_PATH), PassedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
             Files.write(Paths.get(SUITE_REPORT_PATH), SuiteReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);

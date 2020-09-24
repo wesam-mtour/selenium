@@ -1,37 +1,40 @@
 package com.exalt.report.generatedreports;
 
-public class SummaryReport {
-    final static String METHODS_REPORT_URL = "http://localhost:63342/automation-project/test-output/Methods%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
+
+public class FailedTestsReport {
     static private String code =
             "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
-                    "<title>Summary Report</title>" +
                     "<style>" +
-                    "table, td {" +
+                    "table, th, td {" +
                     "  border: 1px solid black;" +
                     "  border-collapse: collapse;" +
                     "}" +
-                    "" +
-                    "" +
                     "</style>" +
                     "</head>" +
                     "<body>" +
-                    "<p style=\"text-indent: 500px\">Summary Report</p>" +
-                    "<br>" +
-                    "<table style=\"width:60%\">";
+                    "" +
+                    "<h1 style=\"text-align:center\">Failure Tests</h1>";
+//                    "<table style=\"width:100%\">" +
+//                    "  <tr>" +
+//                    "<th>Class Name</th>" +
+//                    "    <th>Test Case</th> " +
+//                    "    <th>Test Case Number </th>" +
+//                    "    <th>Reason </th>" +
+//                    "</tr>";
 
     public static String getCode() {
         return code;
     }
 
     public static String concat(String addedCode) {
-        SummaryReport.code = SummaryReport.code.concat(addedCode);
+        FailedTestsReport.code = FailedTestsReport.code.concat(addedCode);
         return getCode();
     }
 
     public static String concatEndTags() {
-        SummaryReport.code = SummaryReport.code.concat(
+        FailedTestsReport.code = FailedTestsReport.code.concat(
                 "</table>" +
                         "<br>" +
                         "</body>" +

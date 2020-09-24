@@ -1,4 +1,4 @@
-package com.exalt.reports.generatedreports;
+package com.exalt.report.generatedreports;
 
 public class SuiteReport {
     final static String TEST_REPORT_URL = "http://localhost:63342/automation-project/test-output/Passed%20Tests%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
@@ -12,20 +12,22 @@ public class SuiteReport {
                     "    <style>" +
                     "table, td {" +
                     "  border: 1px solid black;" +
+                    "  border-collapse: collapse;"+
                     "}" +
                     "" +
                     "" +
-                    "    </style>" +
+                    "</style>" +
                     "</head>" +
                     "<body>" +
                     "<p style=\"text-indent: 500px\">TESTS RESULTS</p>" +
                     "<br>" +
                     "<table style=\"width:60%\">" +
                     "    <tr>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\">Suite name </td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\"> <a href=\"" + TEST_REPORT_URL + "\" target=\"_blank\">Tests Passed</a></td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\">Tests failed</td>" +
-                    "        <td style=\"font-weight: bold;\" width=\"5%\">Total Time</td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\">Number of suites </td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\">All tests </td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\"> <a href=\"" + TEST_REPORT_URL + "\" target=\"_blank\">Passed Tests</a></td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\">failed Tests </td>" +
+                    "        <td style=\"font-weight: bold;\" width=\"5%\">Skipped Tests </td>" +
                     "    </tr>";
 
 

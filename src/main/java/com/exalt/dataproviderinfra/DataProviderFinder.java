@@ -12,7 +12,6 @@ public final class DataProviderFinder<T> {
     @NotNull
     @DataProvider(name = "Excel")
     public static Object[][] getConduitLoginPageTestData(@NotNull Method method) throws IOException {
-
         if (method.getName().equals("ConduitLoginTest")) {
             return ConduitLoginPageDataReader.getCredentials();
         } else {
