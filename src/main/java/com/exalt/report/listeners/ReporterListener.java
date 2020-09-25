@@ -4,10 +4,7 @@ import com.exalt.dataproviderinfra.datareader.ConduitLoginPageDataReader;
 import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
-import org.testng.internal.TestResult;
-import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
-import org.testng.xml.XmlTest;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ReporterListener implements IReporter {
-    final static String FAILED_TESTS_REPORT_URL = "http://localhost:63342/automation-project/test-output/Failed%20Tests%20Report.html?_ijt=sr3628kumtgp99nloghuk5bpei";
+    final static String FAILED_TESTS_REPORT_URL = "http://localhost:63342/selenium/test-output/Failed%20Tests%20Report.html?_ijt=s6bin5u7b6tl1nef232hsg4ivu";
     final String SUITE_REPORT_PATH = "test-output\\Suite Report.html";
     final String SUMMARY_REPORT_PATH = "test-output\\Summary Report.html";
     final String PASSED_TESTS_REPORT_PATH = "test-output\\Passed Tests Report.html";
@@ -44,6 +41,12 @@ public class ReporterListener implements IReporter {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
             for (ISuiteResult sr : suiteResults.values()) {
                 ITestContext tc = sr.getTestContext();
+
+                int o = 0;
+                for (ITestNGMethod i : tc.getAllTestMethods()) {
+                    o = i.getParameterInvocationCount();
+                    o = i.getCurrentInvocationCount();
+                }
                 /*
                 Check the success of all methods for this test
                  */
@@ -155,14 +158,8 @@ public class ReporterListener implements IReporter {
 //        XmlTest classes = tc.getCurrentXmlTest();
 //        for (XmlClass xmlClass : classes.getClasses()) {
 
-
-        for (XmlClass xmlTest: tc.getCurrentXmlTest().getClasses()){
-        }
         for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
-            testResult.getTestClass();
-            testResult.getName();
-            IClass ii = testResult.getTestClass();
-            Object[] aa = testResult.getParameters();
+            List<Integer> i = testResult.getMethod().getFailedInvocationNumbers();
             FailedTestsReport.concat(
                     "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
                             "<table style=\"width:100%\">" +
@@ -170,15 +167,25 @@ public class ReporterListener implements IReporter {
                             "<th>Test Name</th>" +
                             "<th>Test Case</th>" +
                             "<th>Test Case Number </th>" +
-                            "<th>Reason </th>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>"+testResult.getName()+"</th>" +
-                            "<td>"+ConduitLoginPageDataReader.testCases.get(0)+"</th>" +
-                            "<td>"+0+" </th>" +
-                            "<td>"+testResult.getThrowable()+" </th>" +
-                            "</tr>" +
-                            "</table>");
+                            "<th>Reason </th>");
+            int index=0;
+            for (int j = 0; j <= i.size(); ++j) {
+                index=i.get(j);
+                FailedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getName() + "</th>" +
+                                "<td>" + ConduitLoginPageDataReader.testCases.get(index) + "</th>" +
+                                "<td>" + (index) + " </th>" +
+                                "<td>" + testResult.getThrowable() + " </th>" +
+                                "</tr>" +
+                                "</table>");
+
+
+            }
+            testResult.getName();
+            IClass ii = testResult.getTestClass();
+            Object[] aa = testResult.getParameters();
 
         }
     }
