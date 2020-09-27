@@ -5,14 +5,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class ConduitLoginPageDataReader {
+public class ConduitLoginTest {
     final static String XLSX_FILE_PATH = "files\\ConduitLoginTest.xlsx";
     final static int sheetNumber = 0;
-    public static List<String> testCases = new ArrayList<>();
+    public static Map<Integer, ArrayList<String>> testCases = new HashMap<Integer, ArrayList<String>>();
+
+    public Map<Integer, ArrayList<String>> getExcelData() {
+        return testCases;
+    }
 
     @NotNull
     public static Object[][] getCredentials() throws IOException {
@@ -35,9 +37,13 @@ public class ConduitLoginPageDataReader {
         Object[][] credential = new Object[sheet.getLastRowNum()][2];
         for (int i = 1, j = 0; i <= sheet.getLastRowNum(); ++i, ++j) {
             row = sheet.getRow(i);
-            testCases.add(dataFormatter.formatCellValue(row.getCell(1)));
-            credential[j][0] = dataFormatter.formatCellValue(row.getCell(2));
-            credential[j][1] = dataFormatter.formatCellValue(row.getCell(3));
+            testCases.put(i - 1, new ArrayList<String>(Arrays.asList(
+                    dataFormatter.formatCellValue(row.getCell(0)),
+                    dataFormatter.formatCellValue(row.getCell(1)),
+                    dataFormatter.formatCellValue(row.getCell(2)),
+                    "pass")));
+            credential[j][0] = dataFormatter.formatCellValue(row.getCell(3));
+            credential[j][1] = dataFormatter.formatCellValue(row.getCell(4));
         }
         /*
          Closing the workbook

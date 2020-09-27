@@ -6,8 +6,6 @@ import com.exalt.pom.ConduitLoginPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
-import java.util.concurrent.TimeUnit;
-
 public class ConduitLoginPageTest {
     final String WEB_DRIVER_URL = "https://demo.productionready.io/#/login";
     private WebDriver webDriver;

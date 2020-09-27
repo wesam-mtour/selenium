@@ -1,36 +1,38 @@
 package com.exalt.report.generatedreports;
 
-public class SummaryReport {
+
+public class SkippedTestsReport {
     static private String code =
             "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
-                    "<title>Summary Report</title>" +
+                    "<title>Skipped Report</title>" +
                     "<style>" +
-                    "table, td {" +
+                    "table, th, td {" +
                     "  border: 1px solid black;" +
                     "  border-collapse: collapse;" +
-                    " column-width: 60px;"+
                     "}" +
-                    "" +
-                    "" +
+                    "th {" +
+                    "padding: 15px;" +
+                    "background-color:#ffff4c" +
+                    "}" +
                     "</style>" +
                     "</head>" +
                     "<body>" +
-                    "<h1>Summary Report for all Suites</h1>" +
-                    "<br>" ;
+                    "<h1 style=\"text-align:center\">Skipped Tests</h1>";
 
     public static String getCode() {
         return code;
     }
 
     public static String concat(String addedCode) {
-        SummaryReport.code = SummaryReport.code.concat(addedCode);
+        SkippedTestsReport.code = SkippedTestsReport.code.concat(addedCode);
         return getCode();
     }
 
     public static String concatEndTags() {
-        SummaryReport.code = SummaryReport.code.concat(
+        SkippedTestsReport.code = SkippedTestsReport.code.concat(
+                "</table>" +
                         "<br>" +
                         "</body>" +
                         "</html>"

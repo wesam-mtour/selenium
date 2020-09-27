@@ -1,68 +1,88 @@
 package com.exalt.report.listeners;
 
-import com.exalt.dataproviderinfra.datareader.ConduitLoginPageDataReader;
 import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class ReporterListener implements IReporter {
-    final static String FAILED_TESTS_REPORT_URL = "http://localhost:63342/selenium/test-output/Failed%20Tests%20Report.html?_ijt=s6bin5u7b6tl1nef232hsg4ivu";
-    final String SUITE_REPORT_PATH = "test-output\\Suite Report.html";
-    final String SUMMARY_REPORT_PATH = "test-output\\Summary Report.html";
-    final String PASSED_TESTS_REPORT_PATH = "test-output\\Passed Tests Report.html";
-    final String FAILED_TESTS_REPORT_PATH = "test-output\\Failed Tests Report.html";
-    final String METHODS_REPORT_URL = "test-output\\Methods Report.html";
+    final static String SUMMARY_REPORT_PATH = "test-output\\Summary Report.html";
+    final static String PASSED_TESTS_REPORT_PATH = "test-output\\Passed Tests Report.html";
+    final static String FAILED_TESTS_REPORT_PATH = "test-output\\Failed Tests Report.html";
+    final static String SKIPPED_TESTS_REPORT_PATH = "test-output\\Skipped Tests Report.html";
+    final static String PASSED_TESTS_REPORT_LINK = "../test-output/Passed Tests Report.html";
+    final static String FAILED_TESTS_REPORT_LINK = "../test-output/Failed Tests Report.html";
+    final static String SKIPPED_TESTS_REPORT_LINK = "../test-output/Skipped Tests Report.html";
+
 
     int totalNumberOfPassedMethods = 0;
     int totalNumberOfFailedMethods = 0;
     int totalNumberOfSkippedMethods = 0;
-    int totalNumberOfPassedTests = 0;
-    int totalNumberOfFailedTests = 0;
-    String suiteName;
-    boolean parallel = false;
     List<Double> testsTime = new ArrayList<>();
-
-    /*
-    To read the infrastructure report
-     */
-    ITestNGMethod[] a = new ITestNGMethod[0];
+    Map<Integer, ArrayList<String>> excelData;
 
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         for (ISuite suite : suites) {
-            suiteName = suite.getName();
             Map<String, ISuiteResult> suiteResults = suite.getResults();
             for (ISuiteResult sr : suiteResults.values()) {
                 ITestContext tc = sr.getTestContext();
-
-                int o = 0;
-                for (ITestNGMethod i : tc.getAllTestMethods()) {
-                    o = i.getParameterInvocationCount();
-                    o = i.getCurrentInvocationCount();
+                /*
+                Writing a summary report of all tests
+                 */
+                writeSummaryReport(tc);
+                /*
+                Writing a report of Failed  tests
+                 */
+                try {
+                    writeFailedTestReport(sr, tc);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
                 }
                 /*
-                Check the success of all methods for this test
+                Writing a report of successful tests
                  */
-                //   checkAllMethodsAcceptance(tc);
-                /*
-                To add new row in the test report table
-                 */
-                addRowToSummaryReport(sr, tc);
-                addRowToFailedTestReport(sr, tc);
-
-                /*
-                If there are no failed methods for this test then it should be added to passed report and Methods Report
-                 */
-                if (tc.getFailedTests().size() == 0) {
-                    //addRowToPassedTestReport(sr, tc);
-                    //addRowToMethodsReport(sr, tc);
+                try {
+                    writePassedTestReport(sr, tc);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    writeSkippedTestReport(sr, tc);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -70,16 +90,12 @@ public class ReporterListener implements IReporter {
         /*
         To check the type of tests "parallel or not"
          */
-        if (!(xmlSuites.get(0).getParallel().name().equals("NONE"))) {
-            parallel = true;
-            //writeAsParallelTest();
-        } else {
-            // writeAsSequentialTest();
-        }
-        /*
-         To add new row in the suite report table
-         */
-        // addRowToSuiteReport();
+//        if (!(xmlSuites.get(0).getParallel().name().equals("NONE"))) {
+//            parallel = true;
+//            writeAsParallelTest();
+//        } else {
+//             writeAsSequentialTest();
+//        }
         /*
         Print all reports permanently
          */
@@ -96,128 +112,181 @@ public class ReporterListener implements IReporter {
         return sum;
     }
 
-    private void addRowToMethodsReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
-        String testName = sr.toString().substring(21, sr.toString().length() - 1);
-        //  testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
-        for (ITestNGMethod iResultMap : tc.getAllTestMethods())
-            MethodsReport.concat(
-                    "<tr>" +
-                            "<td>" + testName + "</td>" +
-                            "<td>" + iResultMap.getMethodName() + "</td>" +
-                            "<td style=\"color:black;font-weight: bold;\">" + "" + "</td>" +
-                            "</tr>");
-    }
-
-    /*
-    Check the success of all methods for this test
-     */
-    private void checkAllMethodsAcceptance(@NotNull ITestContext tc) {
-        if (tc.getAllTestMethods().length == tc.getPassedTests().size()) {
-            totalNumberOfPassedTests += 1;
-        } else {
-            totalNumberOfFailedTests += 1;
-        }
-    }
-
-    private void addRowToSuiteReport() {
-        if (parallel == true) {
-            SuiteReport.concat(
-                    "<tr>" +
-                            "<td>" + suiteName + "</td>" +
-                            "<td>" + totalNumberOfPassedTests + "</td>" +
-                            "<td>" + totalNumberOfFailedTests + "</td>" +
-                            "<td>" + Collections.max(testsTime) + "</td>" +
-                            "</tr>"
-            );
-        } else {
-            SuiteReport.concat(
-                    "<tr>" +
-                            "<td>" + suiteName + "</td>" +
-                            "<td>" + totalNumberOfPassedTests + "</td>" +
-                            "<td>" + totalNumberOfFailedTests + "</td>" +
-                            "<td>" + totalTimeSpentByTests(testsTime) + "</td>" +
-                            "</tr>"
-            );
-        }
-    }
-
-    private void addRowToPassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
-        String testName = sr.toString().substring(21, sr.toString().length() - 1);
-        // testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
-        PassedTestsReport.concat(
-                "<tr>" +
-                        "<td>" + testName + "</td>" +
-                        "<td style=\"background-color:yellowgreen;color:black;font-weight: bold;\">" + tc.getPassedTests().getAllResults().size() + "</td>" +
-                        "<td style=\"color:black;font-weight: bold;\">" + testsTime.get(testsTime.size() - 1) + "</td>" +
-                        "</tr>");
-    }
-
-    private void addRowToFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
-        String testName = sr.toString().substring(21, sr.toString().length() - 1);
-//
-//        XmlTest classes = tc.getCurrentXmlTest();
-//        for (XmlClass xmlClass : classes.getClasses()) {
-
-        for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
-            List<Integer> i = testResult.getMethod().getFailedInvocationNumbers();
-            FailedTestsReport.concat(
-                    "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
-                            "<table style=\"width:100%\">" +
-                            "<tr>" +
-                            "<th>Test Name</th>" +
-                            "<th>Test Case</th>" +
-                            "<th>Test Case Number </th>" +
-                            "<th>Reason </th>");
-            int index=0;
-            for (int j = 0; j <= i.size(); ++j) {
-                index=i.get(j);
-                FailedTestsReport.concat(
-                        "</tr>" +
+    private void writeSkippedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Map<String, String> map = new HashMap<String, String>();
+        for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
+            if (!(map.containsKey(testResult.getName()))) {
+                SkippedTestsReport.concat(
+                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                                "<table style=\"width:100%\">" +
                                 "<tr>" +
-                                "<td>" + testResult.getName() + "</th>" +
-                                "<td>" + ConduitLoginPageDataReader.testCases.get(index) + "</th>" +
-                                "<td>" + (index) + " </th>" +
-                                "<td>" + testResult.getThrowable() + " </th>" +
-                                "</tr>" +
-                                "</table>");
+                                "<th>Test Name</th>" +
+                                "<th>Run</th>" +
+                                "<th>Test Case</th>" +
+                                "<th>Test Case Number </th>");
+                if (testResult.getParameters().length != 0) {
+                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
+                    Object instance = dataClass.newInstance();
+                    String methodName = "getExcelData";
+                    Method getNameMethod = instance.getClass().getMethod(methodName);
+                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
+                    for (int i = 0; i < excelData.size(); ++i) {
+                        if (excelData.get(i).get(3).equals("pass")) {
+                            SkippedTestsReport.concat(
+                                    "</tr>" +
+                                            "<tr>" +
+                                            "<td>" + testResult.getName() + "</td>" +
+                                            "<td>" + excelData.get(i).get(0) + "</td>" +
+                                            "<td>" + excelData.get(i).get(2) + "</td>" +
+                                            "<td>" + excelData.get(i).get(1) + " </td>" +
+                                            "</tr>");
+                        }
+                    }
+                } else {
+                    SkippedTestsReport.concat(
+                            "</tr>" +
+                                    "<tr>" +
+                                    "<td>" + testResult.getName() + "</td>" +
+                                    "<td>" + "No test case currently" + " </td>" +
+                                    "<td>" + "No test case currently" + "</td>" +
+                                    "<td>" + "No test case currently" + " </td>" +
 
+                                    "</tr>");
 
+                }
+                map.put(testResult.getName(), "demoValue");
             }
-            testResult.getName();
-            IClass ii = testResult.getTestClass();
-            Object[] aa = testResult.getParameters();
+            SkippedTestsReport.concat("</table>");
+        }
+    }
 
+    private void writePassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+
+        Map<String, String> map = new HashMap<String, String>();
+        for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
+            if (!(map.containsKey(testResult.getName()))) {
+                PassedTestsReport.concat(
+                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                                "<table style=\"width:100%\">" +
+                                "<tr>" +
+                                "<th>Test Name</th>" +
+                                "<th>Test Case</th>" +
+                                "<th>Test Case Number </th>");
+                if (testResult.getParameters().length != 0) {
+                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
+                    Object instance = dataClass.newInstance();
+                    String methodName = "getExcelData";
+                    Method getNameMethod = instance.getClass().getMethod(methodName);
+                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
+                    for (int i = 0; i < excelData.size(); ++i) {
+                        if (excelData.get(i).get(3).equals("pass") && excelData.get(i).get(0).equals("1")) {
+                            PassedTestsReport.concat(
+                                    "</tr>" +
+                                            "<tr>" +
+                                            "<td>" + testResult.getName() + "</td>" +
+                                            "<td>" + excelData.get(i).get(2) + "</td>" +
+                                            "<td>" + excelData.get(i).get(1) + " </td>" +
+                                            "</tr>");
+                        }
+                    }
+                } else {
+                    PassedTestsReport.concat(
+                            "</tr>" +
+                                    "<tr>" +
+                                    "<td>" + testResult.getName() + "</td>" +
+                                    "<td>" + "No test case currently" + "</td>" +
+                                    "<td>" + "No test case currently" + " </td>" +
+                                    "</tr>");
+
+                }
+                map.put(testResult.getName(), "demoValue");
+            }
+            PassedTestsReport.concat("</table>");
+        }
+    }
+
+    private void writeFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Map<String, String> map = new HashMap<String, String>();
+        for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
+            List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
+            if (!(map.containsKey(testResult.getName()))) {
+                FailedTestsReport.concat(
+                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                                "<table style=\"width:100%\">" +
+                                "<tr>" +
+                                "<th>Test Name</th>" +
+                                "<th>Test Case</th>" +
+                                "<th>Test Case Number </th>" +
+                                "<th>Reason </th>");
+                if (testResult.getParameters().length != 0) {
+                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
+                    Object instance = dataClass.newInstance();
+                    String methodName = "getExcelData";
+                    Method getNameMethod = instance.getClass().getMethod(methodName);
+                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
+
+                    for (int index : FailedInvocationList) {
+                        FailedTestsReport.concat(
+                                "</tr>" +
+                                        "<tr>" +
+                                        "<td>" + testResult.getName() + "</td>" +
+                                        "<td>" + excelData.get(index).get(2) + "</td>" +
+                                        "<td>" + excelData.get(index).get(1) + " </td>" +
+                                        "<td>" + testResult.getThrowable() + " </td>" +
+                                        "</tr>");
+                        excelData.get(index).set(3, "failed");
+                    }
+
+                } else {
+                    FailedTestsReport.concat(
+                            "</tr>" +
+                                    "<tr>" +
+                                    "<td>" + testResult.getName() + "</td>" +
+                                    "<td>" + "No test case currently" + "</td>" +
+                                    "<td>" + "No test case currently" + " </td>" +
+                                    "<td>" + testResult.getThrowable() + " </td>" +
+                                    "</tr>");
+
+                }
+                map.put(testResult.getName(), "demoValue");
+            }
+            FailedTestsReport.concat("</table>");
         }
     }
 
 
-    private void addRowToSummaryReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) {
+    private void writeSummaryReport(@NotNull ITestContext tc) {
         totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
         totalNumberOfFailedMethods += tc.getFailedTests().getAllResults().size();
         totalNumberOfSkippedMethods += tc.getSkippedTests().getAllResults().size();
-        String testName = sr.toString().substring(21, sr.toString().length() - 1);
         testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
         SummaryReport.concat(
-                "<tr>" +
+                "<table>" +
+                        "<tr>" +
                         "<td>Number of suites</td>" +
-                        "<td>11 wrong</td> " +
+                        "<td>??</td> " +
                         "</tr>" +
                         "<tr>" +
                         "<td>All Tests</td>" +
-                        "<td>" + (totalNumberOfFailedMethods + totalNumberOfPassedMethods) + "</td>" +
+                        "<td>" + (totalNumberOfFailedMethods + totalNumberOfPassedMethods + totalNumberOfSkippedMethods) + "</td>" +
                         "</tr>" +
                         "<tr> " +
-                        "<td><a href=\"" + FAILED_TESTS_REPORT_URL + "\" target=\"_blank\">Passed Tests</a></td>" +
+                        "<td><a href=\"" + PASSED_TESTS_REPORT_LINK + "\" target=\"_blank\">Passed Tests</a></td>" +
                         "<td>" + totalNumberOfPassedMethods + "</td>" +
                         "</tr>" +
                         "<tr> " +
-                        "<td><a href=\"" + FAILED_TESTS_REPORT_URL + "\" target=\"_blank\">Failed Tests</a></td>" +
+                        "<td><a href=\"" + FAILED_TESTS_REPORT_LINK + "\" target=\"_blank\">Failed Tests</a></td>" +
                         "<td>" + totalNumberOfFailedMethods + "</td>" +
                         "</tr>" +
                         "<tr> " +
-                        "<td>Skipped Tests</td>" +
+                        "<td><a href=\"" + SKIPPED_TESTS_REPORT_LINK + "\" target=\"_blank\">Skipped Tests</a></td>" +
                         "<td>" + totalNumberOfSkippedMethods + "</td>" +
-                        "</tr>");
+                        "</tr>" +
+                        "</table>" +
+                        "<br>");
     }
 
     private void writeAsParallelTest() {
@@ -244,11 +313,11 @@ public class ReporterListener implements IReporter {
 
     private void fileOverwriting() {
         try {
-            Files.write(Paths.get(FAILED_TESTS_REPORT_PATH), FailedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-            Files.write(Paths.get(METHODS_REPORT_URL), MethodsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-            Files.write(Paths.get(PASSED_TESTS_REPORT_PATH), PassedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
-            Files.write(Paths.get(SUITE_REPORT_PATH), SuiteReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
             Files.write(Paths.get(SUMMARY_REPORT_PATH), SummaryReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(Paths.get(PASSED_TESTS_REPORT_PATH), PassedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(Paths.get(FAILED_TESTS_REPORT_PATH), FailedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(Paths.get(SKIPPED_TESTS_REPORT_PATH), SkippedTestsReport.concatEndTags().getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
