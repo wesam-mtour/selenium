@@ -26,6 +26,7 @@ public class ReporterListener implements IReporter {
     int totalNumberOfPassedMethods = 0;
     int totalNumberOfFailedMethods = 0;
     int totalNumberOfSkippedMethods = 0;
+    int numberOfSuites = 0;
     List<Double> testsTime = new ArrayList<>();
     Map<Integer, ArrayList<String>> excelData;
 
@@ -33,12 +34,12 @@ public class ReporterListener implements IReporter {
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         for (ISuite suite : suites) {
             Map<String, ISuiteResult> suiteResults = suite.getResults();
+            numberOfSuites = suiteResults.size();
             for (ISuiteResult sr : suiteResults.values()) {
                 ITestContext tc = sr.getTestContext();
-                /*
-                Writing a summary report of all tests
-                 */
-                writeSummaryReport(tc);
+                totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
+                totalNumberOfFailedMethods += tc.getFailedTests().getAllResults().size();
+                totalNumberOfSkippedMethods += tc.getSkippedTests().getAllResults().size();
                 /*
                 Writing a report of Failed  tests
                  */
@@ -88,41 +89,30 @@ public class ReporterListener implements IReporter {
             }
         }
         /*
-        To check the type of tests "parallel or not"
-         */
-//        if (!(xmlSuites.get(0).getParallel().name().equals("NONE"))) {
-//            parallel = true;
-//            writeAsParallelTest();
-//        } else {
-//             writeAsSequentialTest();
-//        }
+        Writing a summary report of all tests
+        */
+        writeSummaryReport();
         /*
         Print all reports permanently
          */
+
         fileOverwriting();
     }
 
     /*
     To collect all the times that the tests in the suite are not parallel
      */
-    private double totalTimeSpentByTests(@NotNull List<Double> list) {
-        double sum = 0;
-        for (Double i : list)
-            sum += i;
-        return sum;
-    }
-
     private void writeSkippedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Map<String, String> map = new HashMap<String, String>();
-        for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
+        for (ITestResult testResult : tc.getSkippedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
                 SkippedTestsReport.concat(
-                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                        "<h2>Suite:" + tc.getName() + "</h2>" +
                                 "<table style=\"width:100%\">" +
                                 "<tr>" +
                                 "<th>Test Name</th>" +
                                 "<th>Run</th>" +
-                                "<th>Test Case</th>" +
+                                "<th>Description</th>" +
                                 "<th>Test Case Number </th>");
                 if (testResult.getParameters().length != 0) {
                     String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
@@ -132,7 +122,7 @@ public class ReporterListener implements IReporter {
                     Method getNameMethod = instance.getClass().getMethod(methodName);
                     excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
                     for (int i = 0; i < excelData.size(); ++i) {
-                        if (excelData.get(i).get(3).equals("pass")) {
+                        if (excelData.get(i).get(0).equals("no")) {
                             SkippedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
@@ -167,11 +157,11 @@ public class ReporterListener implements IReporter {
         for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
                 PassedTestsReport.concat(
-                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                        "<h2>Suite:" + tc.getName() + "</h2>" +
                                 "<table style=\"width:100%\">" +
                                 "<tr>" +
                                 "<th>Test Name</th>" +
-                                "<th>Test Case</th>" +
+                                "<th>Description</th>" +
                                 "<th>Test Case Number </th>");
                 if (testResult.getParameters().length != 0) {
                     String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
@@ -181,7 +171,7 @@ public class ReporterListener implements IReporter {
                     Method getNameMethod = instance.getClass().getMethod(methodName);
                     excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
                     for (int i = 0; i < excelData.size(); ++i) {
-                        if (excelData.get(i).get(3).equals("pass") && excelData.get(i).get(0).equals("1")) {
+                        if (excelData.get(i).get(3).equals("pass") && excelData.get(i).get(0).equals("yes")) {
                             PassedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
@@ -213,11 +203,11 @@ public class ReporterListener implements IReporter {
             List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
             if (!(map.containsKey(testResult.getName()))) {
                 FailedTestsReport.concat(
-                        "<h2>Suite:" + testResult.getTestClass().getName() + "</h2>" +
+                        "<h2>Suite:" + tc.getName() + "</h2>" +
                                 "<table style=\"width:100%\">" +
                                 "<tr>" +
                                 "<th>Test Name</th>" +
-                                "<th>Test Case</th>" +
+                                "<th>Description</th>" +
                                 "<th>Test Case Number </th>" +
                                 "<th>Reason </th>");
                 if (testResult.getParameters().length != 0) {
@@ -229,15 +219,17 @@ public class ReporterListener implements IReporter {
                     excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
 
                     for (int index : FailedInvocationList) {
-                        FailedTestsReport.concat(
-                                "</tr>" +
-                                        "<tr>" +
-                                        "<td>" + testResult.getName() + "</td>" +
-                                        "<td>" + excelData.get(index).get(2) + "</td>" +
-                                        "<td>" + excelData.get(index).get(1) + " </td>" +
-                                        "<td>" + testResult.getThrowable() + " </td>" +
-                                        "</tr>");
-                        excelData.get(index).set(3, "failed");
+                        if (excelData.get(index).get(0).equals("yes")) {
+                            FailedTestsReport.concat(
+                                    "</tr>" +
+                                            "<tr>" +
+                                            "<td>" + testResult.getName() + "</td>" +
+                                            "<td>" + excelData.get(index).get(2) + "</td>" +
+                                            "<td>" + excelData.get(index).get(1) + " </td>" +
+                                            "<td>" + testResult.getThrowable().getMessage().substring(0, 158) + " </td>" +
+                                            "</tr>");
+                            excelData.get(index).set(3, "failed");
+                        }
                     }
 
                 } else {
@@ -249,7 +241,6 @@ public class ReporterListener implements IReporter {
                                     "<td>" + "No test case currently" + " </td>" +
                                     "<td>" + testResult.getThrowable() + " </td>" +
                                     "</tr>");
-
                 }
                 map.put(testResult.getName(), "demoValue");
             }
@@ -258,16 +249,12 @@ public class ReporterListener implements IReporter {
     }
 
 
-    private void writeSummaryReport(@NotNull ITestContext tc) {
-        totalNumberOfPassedMethods += tc.getPassedTests().getAllResults().size();
-        totalNumberOfFailedMethods += tc.getFailedTests().getAllResults().size();
-        totalNumberOfSkippedMethods += tc.getSkippedTests().getAllResults().size();
-        testsTime.add(((tc.getEndDate().getTime() - tc.getStartDate().getTime()) / 1000.0));
+    private void writeSummaryReport() {
         SummaryReport.concat(
                 "<table>" +
                         "<tr>" +
                         "<td>Number of suites</td>" +
-                        "<td>??</td> " +
+                        "<td>" + numberOfSuites + "</td> " +
                         "</tr>" +
                         "<tr>" +
                         "<td>All Tests</td>" +
@@ -287,28 +274,6 @@ public class ReporterListener implements IReporter {
                         "</tr>" +
                         "</table>" +
                         "<br>");
-    }
-
-    private void writeAsParallelTest() {
-        SummaryReport.concat(
-                "<tr>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + "Total" + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfPassedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfFailedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfSkippedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + Collections.max(testsTime) + "</td>" +
-                        "</tr>");
-    }
-
-    private void writeAsSequentialTest() {
-        SummaryReport.concat(
-                "<tr>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + "Total" + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfPassedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfFailedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalNumberOfSkippedMethods + "</td>" +
-                        "<td style=\"color:black;font-weight:bold;\">" + totalTimeSpentByTests(testsTime) + "</td>" +
-                        "</tr>");
     }
 
     private void fileOverwriting() {

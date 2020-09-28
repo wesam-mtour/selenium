@@ -4,6 +4,7 @@ import com.exalt.dataproviderinfra.DataProviderFinder;
 import com.exalt.webdriverinitializer.BrowserFactory;
 import com.exalt.pom.ConduitLoginPage;
 import org.openqa.selenium.WebDriver;
+import org.testng.SkipException;
 import org.testng.annotations.*;
 
 public class ConduitLoginPageTest {
@@ -18,9 +19,13 @@ public class ConduitLoginPageTest {
     }
 
     @Test(dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
-    public void ConduitLoginTest(String email, String password) throws InterruptedException {
-        conduitLoginPage = new ConduitLoginPage(webDriver);
-        conduitLoginPage.loginWithEmailAndPassword(email, password);
+    public void ConduitLoginTest(String run, String email, String password) throws InterruptedException {
+        if (run.equals("no")) {
+            throw new SkipException("Skipping tests because resource was not available.");
+        } else {
+            conduitLoginPage = new ConduitLoginPage(webDriver);
+            conduitLoginPage.loginWithEmailAndPassword(email, password);
+        }
     }
 
     @AfterMethod

@@ -34,7 +34,7 @@ public class ConduitLoginTest {
         /*
          Or you can use a for-each loop to iterate over the rows and columns
          */
-        Object[][] credential = new Object[sheet.getLastRowNum()][2];
+        Object[][] credential = new Object[sheet.getLastRowNum()][3];
         for (int i = 1, j = 0; i <= sheet.getLastRowNum(); ++i, ++j) {
             row = sheet.getRow(i);
             testCases.put(i - 1, new ArrayList<String>(Arrays.asList(
@@ -42,8 +42,9 @@ public class ConduitLoginTest {
                     dataFormatter.formatCellValue(row.getCell(1)),
                     dataFormatter.formatCellValue(row.getCell(2)),
                     "pass")));
-            credential[j][0] = dataFormatter.formatCellValue(row.getCell(3));
-            credential[j][1] = dataFormatter.formatCellValue(row.getCell(4));
+            credential[j][0] = dataFormatter.formatCellValue(row.getCell(0));
+            credential[j][1] = dataFormatter.formatCellValue(row.getCell(3));
+            credential[j][2] = dataFormatter.formatCellValue(row.getCell(4));
         }
         /*
          Closing the workbook
