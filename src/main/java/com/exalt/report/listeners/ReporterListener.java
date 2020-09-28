@@ -104,16 +104,18 @@ public class ReporterListener implements IReporter {
      */
     private void writeSkippedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Map<String, String> map = new HashMap<String, String>();
+        SkippedTestsReport.concat(
+                "<h2>Suite:" + tc.getName() + "</h2>" +
+                        "<table style=\"width:100%\">" +
+                        "<tr>" +
+                        "<th>Class Name</th>" +
+                        "<th>Test Name</th>" +
+                        "<th>Run</th>" +
+                        "<th>Description</th>" +
+                        "<th>Test Case Number </th>" +
+                        "</tr>");
         for (ITestResult testResult : tc.getSkippedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
-                SkippedTestsReport.concat(
-                        "<h2>Suite:" + tc.getName() + "</h2>" +
-                                "<table style=\"width:100%\">" +
-                                "<tr>" +
-                                "<th>Test Name</th>" +
-                                "<th>Run</th>" +
-                                "<th>Description</th>" +
-                                "<th>Test Case Number </th>");
                 if (testResult.getParameters().length != 0) {
                     String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
@@ -126,6 +128,7 @@ public class ReporterListener implements IReporter {
                             SkippedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
+                                            "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
                                             "<td>" + excelData.get(i).get(0) + "</td>" +
                                             "<td>" + excelData.get(i).get(2) + "</td>" +
@@ -137,6 +140,7 @@ public class ReporterListener implements IReporter {
                     SkippedTestsReport.concat(
                             "</tr>" +
                                     "<tr>" +
+                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                     "<td>" + testResult.getName() + "</td>" +
                                     "<td>" + "No test case currently" + " </td>" +
                                     "<td>" + "No test case currently" + "</td>" +
@@ -147,22 +151,25 @@ public class ReporterListener implements IReporter {
                 }
                 map.put(testResult.getName(), "demoValue");
             }
-            SkippedTestsReport.concat("</table>");
         }
+        SkippedTestsReport.concat("</table>");
+
     }
 
     private void writePassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         Map<String, String> map = new HashMap<String, String>();
+        PassedTestsReport.concat(
+                "<h2>Suite:" + tc.getName() + "</h2>" +
+                        "<table style=\"width:100%\">" +
+                        "<tr>" +
+                        "<th>Class Name</th>" +
+                        "<th>Test Name</th>" +
+                        "<th>Description</th>" +
+                        "<th>Test Case Number </th>" +
+                        "</tr>");
         for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
-                PassedTestsReport.concat(
-                        "<h2>Suite:" + tc.getName() + "</h2>" +
-                                "<table style=\"width:100%\">" +
-                                "<tr>" +
-                                "<th>Test Name</th>" +
-                                "<th>Description</th>" +
-                                "<th>Test Case Number </th>");
                 if (testResult.getParameters().length != 0) {
                     String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
@@ -175,6 +182,7 @@ public class ReporterListener implements IReporter {
                             PassedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
+                                            "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
                                             "<td>" + excelData.get(i).get(2) + "</td>" +
                                             "<td>" + excelData.get(i).get(1) + " </td>" +
@@ -185,6 +193,7 @@ public class ReporterListener implements IReporter {
                     PassedTestsReport.concat(
                             "</tr>" +
                                     "<tr>" +
+                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                     "<td>" + testResult.getName() + "</td>" +
                                     "<td>" + "No test case currently" + "</td>" +
                                     "<td>" + "No test case currently" + " </td>" +
@@ -193,23 +202,25 @@ public class ReporterListener implements IReporter {
                 }
                 map.put(testResult.getName(), "demoValue");
             }
-            PassedTestsReport.concat("</table>");
         }
+        PassedTestsReport.concat("</table>");
     }
 
     private void writeFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Map<String, String> map = new HashMap<String, String>();
+        FailedTestsReport.concat(
+                "<h2>Suite:" + tc.getName() + "</h2>" +
+                        "<table style=\"width:100%\">" +
+                        "<tr>" +
+                        "<th>Class Name</th>" +
+                        "<th>Test Name</th>" +
+                        "<th>Description</th>" +
+                        "<th>Test Case Number</th>" +
+                        "<th>Reason</th>" +
+                        "</tr>");
         for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
             List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
             if (!(map.containsKey(testResult.getName()))) {
-                FailedTestsReport.concat(
-                        "<h2>Suite:" + tc.getName() + "</h2>" +
-                                "<table style=\"width:100%\">" +
-                                "<tr>" +
-                                "<th>Test Name</th>" +
-                                "<th>Description</th>" +
-                                "<th>Test Case Number </th>" +
-                                "<th>Reason </th>");
                 if (testResult.getParameters().length != 0) {
                     String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
@@ -221,8 +232,8 @@ public class ReporterListener implements IReporter {
                     for (int index : FailedInvocationList) {
                         if (excelData.get(index).get(0).equals("yes")) {
                             FailedTestsReport.concat(
-                                    "</tr>" +
-                                            "<tr>" +
+                                    "<tr>" +
+                                            "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
                                             "<td>" + excelData.get(index).get(2) + "</td>" +
                                             "<td>" + excelData.get(index).get(1) + " </td>" +
@@ -236,6 +247,7 @@ public class ReporterListener implements IReporter {
                     FailedTestsReport.concat(
                             "</tr>" +
                                     "<tr>" +
+                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                     "<td>" + testResult.getName() + "</td>" +
                                     "<td>" + "No test case currently" + "</td>" +
                                     "<td>" + "No test case currently" + " </td>" +
@@ -244,8 +256,9 @@ public class ReporterListener implements IReporter {
                 }
                 map.put(testResult.getName(), "demoValue");
             }
-            FailedTestsReport.concat("</table>");
         }
+        FailedTestsReport.concat("</table>");
+
     }
 
 

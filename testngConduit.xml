@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium project" parallel="classes" thread-count="1">
+<suite name="Selenium project" parallel="classes" thread-count="2">
     <listeners>
         <listener class-name="com.exalt.report.listeners.ReporterListener"/>
     </listeners>
-    <test name="logwith prapallel chrom.java">
+    <test name="login with parallel chrome.java">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
             <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
             <class name="com.exalt.tests.DemoTest"></class>
         </classes>
     </test>
-    <test name="logwith prapallel. fire java">
+    <test name="login with parallel firefox java">
         <parameter name="browser" value="Firefox"></parameter>
         <classes>
             <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>

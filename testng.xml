@@ -12,9 +12,8 @@
         </classes>
     </test>
     <test name="ConduitLoginPageTestFirefox">
-        <parameter name="browser" value="firefox"></parameter>
+        <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.DemoTest"></class>
             <class name="com.exalt.tests.ConduitLoginPageTest"></class>
         </classes>
     </test>
