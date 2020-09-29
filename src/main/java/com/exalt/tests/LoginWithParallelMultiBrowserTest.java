@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 public class LoginWithParallelMultiBrowserTest {
 
 
-    final String WEB_DRIVER_URL = "https://senglehardt.com/demo/no_boundaries/loginmanager/";
+    final String WEB_DRIVER_URL = "https://demo.productionready.io/#/";
     private WebDriver webDriver;
     private LoginPage loginPage;
 

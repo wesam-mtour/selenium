@@ -6,23 +6,20 @@ public class FailedTestsReport {
             "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
+                    "<title>Failed Report</title>" +
                     "<style>" +
                     "table, th, td {" +
                     "  border: 1px solid black;" +
                     "  border-collapse: collapse;" +
                     "}" +
+                    "th {" +
+                    "padding: 15px;" +
+                    "background-color:#ff3232" +
+                    "}" +
                     "</style>" +
                     "</head>" +
                     "<body>" +
-                    "" +
                     "<h1 style=\"text-align:center\">Failure Tests</h1>";
-//                    "<table style=\"width:100%\">" +
-//                    "  <tr>" +
-//                    "<th>Class Name</th>" +
-//                    "    <th>Test Case</th> " +
-//                    "    <th>Test Case Number </th>" +
-//                    "    <th>Reason </th>" +
-//                    "</tr>";
 
     public static String getCode() {
         return code;

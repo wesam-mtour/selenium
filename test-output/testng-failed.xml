@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [All Test Suite]">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Selenium project]">
   <listeners>
     <listener class-name="com.exalt.report.listeners.ReporterListener"/>
   </listeners>
-  <test thread-count="5" name="ConduitLoginPageTesttt.java(failed)">
+  <test thread-count="5" name="login with parallel chrome.java(failed)">
     <parameter name="browser" value="Chrome"/>
     <classes>
-      <class name="com.exalt.tests.ConduitLoginPageTest">
+      <class name="com.exalt.tests.ConduitTest">
         <methods>
-          <include name="setup"/>
           <include name="tearDown"/>
-          <include name="ConduitLoginTest" invocation-numbers="1 3"/>
+          <include name="setup"/>
+          <include name="ConduitLoginTest" invocation-numbers="1 2 3 4 5"/>
         </methods>
-      </class> <!-- com.exalt.tests.ConduitLoginPageTest -->
-      <class name="com.exalt.tests.DemoTest">
-        <methods>
-          <include name="demoTesttestest2"/>
-          <include name="demoTesttestest"/>
-        </methods>
-      </class> <!-- com.exalt.tests.DemoTest -->
+      </class> <!-- com.exalt.tests.ConduitTest -->
     </classes>
-  </test> <!-- ConduitLoginPageTesttt.java(failed) -->
-</suite> <!-- Failed suite [All Test Suite] -->
+  </test> <!-- login with parallel chrome.java(failed) -->
+</suite> <!-- Failed suite [Selenium project] -->

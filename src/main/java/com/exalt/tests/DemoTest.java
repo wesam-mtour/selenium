@@ -1,16 +1,28 @@
 package com.exalt.tests;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import com.exalt.dataproviderinfra.DataProviderFinder;
+import com.exalt.webdriverinitializer.BrowserFactory;
+import com.exalt.pom.ConduitLoginPage;
+import org.openqa.selenium.WebDriver;
+import org.testng.SkipException;
+import org.testng.annotations.*;
 
 public class DemoTest {
+    final String WEB_DRIVER_URL = "https://demo.productionready.io/#/login";
+    private WebDriver webDriver;
+    private ConduitLoginPage conduitLoginPage;
 
-    @Test
-    public void demoTesttestest() {
-        Assert.assertTrue(false);
+    @BeforeMethod
+    @Parameters("browser")
+    public void setup(String browser) throws Exception {
+        webDriver = BrowserFactory.startWebDriver(browser, WEB_DRIVER_URL);
     }
-    @Test
-    public void demoTesttestest2() {
-        Assert.assertTrue(false);
+
+    @AfterMethod
+    public void tearDown() {
+        webDriver.quit();
     }
+
 }
+
+

@@ -9,10 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
 public class ConduitLoginPage {
-
     private WebDriver webDriver;
     /*
     Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
@@ -39,11 +36,10 @@ public class ConduitLoginPage {
         ActionsFinder.sendKeys(this.email, email);
         ActionsFinder.sendKeys(this.password, password);
         ActionsFinder.click(signInButton);
-       // ActionsFinder.waitTitleToBe("Home — Conduit");
+//       String s= ActionsFinder.getTitle();
+
         WebDriverWait wait = new WebDriverWait(webDriver, 5);
-         wait.until(ExpectedConditions.titleIs("Home — Conduit"));
-        String currentUrl = webDriver.getCurrentUrl();
-        ActionsFinder.assertEquals(currentUrl, "https://demo.productionready.io/#/");
+      //  wait.until(ExpectedConditions.titleIs("Home — Conduit"));
     }
 
 }

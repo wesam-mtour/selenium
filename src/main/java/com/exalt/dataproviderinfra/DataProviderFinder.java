@@ -1,6 +1,7 @@
 package com.exalt.dataproviderinfra;
 
-import com.exalt.dataproviderinfra.datareader.ConduitLoginPageDataReader;
+import com.exalt.dataproviderinfra.datareader.ConduitLoginTest;
+import com.exalt.dataproviderinfra.datareader.ConduitPostNewArticleTest;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.DataProvider;
 
@@ -11,9 +12,11 @@ public final class DataProviderFinder<T> {
 
     @NotNull
     @DataProvider(name = "Excel")
-    public static Object[][] getConduitLoginPageTestData(@NotNull Method method) throws IOException {
+    public static Object[][] getData(@NotNull Method method) throws IOException {
         if (method.getName().equals("ConduitLoginTest")) {
-            return ConduitLoginPageDataReader.getCredentials();
+            return ConduitLoginTest.getCredentials();
+        } else if (method.getName().equals("ConduitPostNewArticleTest")) {
+            return ConduitPostNewArticleTest.getPosters();
         } else {
             return null;
         }

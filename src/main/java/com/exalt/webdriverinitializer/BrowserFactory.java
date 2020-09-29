@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BrowserFactory {
     static final String CHROME_WEB_DRIVER_KEY = "webdriver.chrome.driver";
@@ -14,6 +15,8 @@ public class BrowserFactory {
     static final String INTERNET_EXPLORER_WEB_DRIVER_KEY = "webdriver.ie.driver";
     static final String INTERNET_EXPLORER_WEB_DRIVER_VALUE = "C:\\Users\\wesamM\\Downloads\\IEDriverServer.exe";
     private static WebDriver webDriver;
+    private static final int TIME_OUT = 5;
+    private static WebDriverWait wait;
 
     public static WebDriver startWebDriver(@NotNull String browserName, String url) throws Exception {
 
@@ -58,6 +61,7 @@ public class BrowserFactory {
                 System.out.println("Browser not Found ");
         }
         openUrl(url);
+        setWaitInstance();
         return webDriver;
     }
 
@@ -67,5 +71,13 @@ public class BrowserFactory {
 
     public static WebDriver getWebDriver() {
         return webDriver;
+    }
+
+    public static WebDriverWait getWaitInstance() {
+        return wait;
+    }
+
+    private static void setWaitInstance() {
+        wait = new WebDriverWait(webDriver, TIME_OUT);
     }
 }

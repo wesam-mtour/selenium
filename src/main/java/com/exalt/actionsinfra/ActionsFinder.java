@@ -9,17 +9,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.time.Duration;
 
 public final class ActionsFinder<T> {
 
     private static WebDriver webDriver = BrowserFactory.getWebDriver();
     private static final int TIME_OUT = 5;
-    private static WebDriverWait wait = new WebDriverWait(webDriver, TIME_OUT);
+    private static WebDriverWait wait = BrowserFactory.getWaitInstance();
 
     public static void click(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
         webElement.click();
+        wait.until(ExpectedConditions.titleIs("Home — Conduit"));
+
     }
 
     public static void clear(@NotNull WebElement webElement) {
@@ -37,8 +38,14 @@ public final class ActionsFinder<T> {
         return webElement.isSelected();
     }
 
+    public static String getText(@NotNull WebElement webElement, String expectedValue) {
+        wait.until(ExpectedConditions.textToBePresentInElement(webElement, expectedValue));
+        return webElement.getText();
+    }
+
+
     public static String getText(@NotNull WebElement webElement) {
-        wait.until(ExpectedConditions.textToBePresentInElement(webElement, webElement.getText()));
+        wait.until(ExpectedConditions.visibilityOf(webElement));
         return webElement.getText();
     }
 
@@ -93,6 +100,10 @@ public final class ActionsFinder<T> {
 
     public static void assertEquals(@NotNull WebElement webElement, String expectedValue) {
         Assert.assertEquals(webElement.getAttribute("value"), expectedValue);
+    }
+
+    public static void assertEquals(@NotNull int actualValue, int expectedValue) {
+        Assert.assertEquals(actualValue, expectedValue);
     }
 
     public static void assertEquals(@NotNull String actualValue, String expectedValue) {
