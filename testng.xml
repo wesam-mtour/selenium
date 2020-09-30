@@ -8,9 +8,6 @@
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
             <class name="com.exalt.tests.ConduitTest">
-                <methods>
-                    <include name="ConduitLoginTest" />
-                </methods>
             </class>
         </classes>
     </test>

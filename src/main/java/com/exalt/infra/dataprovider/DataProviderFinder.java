@@ -1,7 +1,7 @@
-package com.exalt.dataproviderinfra;
+package com.exalt.infra.dataprovider;
 
-import com.exalt.dataproviderinfra.datareader.ConduitLoginTest;
-import com.exalt.dataproviderinfra.datareader.ConduitPostNewArticleTest;
+import com.exalt.infra.dataprovider.datareader.ConduitLoginTest;
+import com.exalt.infra.dataprovider.datareader.ConduitPostNewArticleTest;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.DataProvider;
 

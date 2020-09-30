@@ -1,4 +1,4 @@
-package com.exalt.actionsinfra;
+package com.exalt.infra.actions;
 
 import com.exalt.webdriverinitializer.BrowserFactory;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,6 @@ public final class ActionsFinder<T> {
     public static void click(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
         webElement.click();
-        wait.until(ExpectedConditions.titleIs("Home — Conduit"));
 
     }
 
@@ -118,7 +117,7 @@ public final class ActionsFinder<T> {
         return webDriver.getTitle();
     }
 
-    public static void waitTitleToBe(String expectedTitle) {
-        wait.until(ExpectedConditions.titleIs(expectedTitle));
+    public static void waitTitleToBe(String expectedTitle, @NotNull WebDriverWait waitt) {
+        waitt.until(ExpectedConditions.titleIs(expectedTitle));
     }
 }

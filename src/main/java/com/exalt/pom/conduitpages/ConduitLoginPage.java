@@ -1,13 +1,14 @@
-package com.exalt.pom;
+package com.exalt.pom.conduitpages;
 
-import com.exalt.actionsinfra.ActionsFinder;
+import com.exalt.infra.actions.ActionsFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static com.exalt.infra.utils.Constants.HOME_PAGE;
 
 public class ConduitLoginPage {
     private WebDriver webDriver;
@@ -36,10 +37,8 @@ public class ConduitLoginPage {
         ActionsFinder.sendKeys(this.email, email);
         ActionsFinder.sendKeys(this.password, password);
         ActionsFinder.click(signInButton);
-//       String s= ActionsFinder.getTitle();
-
         WebDriverWait wait = new WebDriverWait(webDriver, 5);
-      //  wait.until(ExpectedConditions.titleIs("Home — Conduit"));
+        ActionsFinder.waitTitleToBe(HOME_PAGE,wait);
     }
 
 }

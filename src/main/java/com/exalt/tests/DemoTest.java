@@ -1,10 +1,8 @@
 package com.exalt.tests;
 
-import com.exalt.dataproviderinfra.DataProviderFinder;
 import com.exalt.webdriverinitializer.BrowserFactory;
-import com.exalt.pom.ConduitLoginPage;
+import com.exalt.pom.conduitpages.ConduitLoginPage;
 import org.openqa.selenium.WebDriver;
-import org.testng.SkipException;
 import org.testng.annotations.*;
 
 public class DemoTest {
