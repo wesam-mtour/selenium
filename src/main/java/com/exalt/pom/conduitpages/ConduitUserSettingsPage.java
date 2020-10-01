@@ -8,7 +8,9 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ConduitUserSettings {
+import static com.exalt.infra.utils.Constants.*;
+
+public class ConduitUserSettingsPage {
     private WebDriver webDriver;
     /*
     Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
@@ -28,6 +30,8 @@ public class ConduitUserSettings {
     /*
      end top navigation bar
      */
+    @FindBy(how = How.CSS, using = "li[ng-repeat=\"error in errors\"]")
+    WebElement errorMessage;
     @FindBy(how = How.CSS, using = "input[placeholder=\"URL of profile picture\"]")
     WebElement urlProfilePicture;
     @FindBy(how = How.CSS, using = "input[placeholder=\"Username\"]")
@@ -40,22 +44,32 @@ public class ConduitUserSettings {
     WebElement password;
     @FindBy(how = How.CSS, using = "button[type=\"submit\"]")
     WebElement updateSettingsButton;
+
     @FindBy(how = How.CSS, using = "button[class=\"btn btn-outline-danger\"]")
     WebElement orClickHereToLogoutButton;
 
-    public ConduitUserSettings(WebDriver webDriver) {
+    public ConduitUserSettingsPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         /*
         This initElements method will create all WebElements
          */
         PageFactory.initElements(webDriver, this);
     }
-    public void setNewPassword(String newPassword){
-        ActionsFinder.sendKeys(this.password,newPassword);
-        ActionsFinder.click(updateSettingsButton);
-        WebDriverWait wait = new WebDriverWait(webDriver,5);
-        ActionsFinder.waitTitleToBe("@"+ActionsFinder.getText(userProfileLink)+" — Conduit",wait);
 
+    public void setNewPassword(String newPassword, String expectedErrorMessage) {
+        ActionsFinder.sendKeys(this.password, newPassword);
+        ActionsFinder.click(updateSettingsButton);
+        try {
+            ActionsFinder.isDisplayed(this.errorMessage);
+            webDriver.getTitle().equals(SETTINGS_PAGE);
+            ActionsFinder.assertEquals(this.errorMessage.getText(), expectedErrorMessage);
+        } catch (Exception e) {
+            ActionsFinder.assertEquals(webDriver.getTitle(), "@" + ActionsFinder.getText(userProfileLink) + " — Conduit");
+        }
+    }
+
+    public void getOrClickHereToLogoutButton() {
+        ActionsFinder.click(orClickHereToLogoutButton);
     }
 
 

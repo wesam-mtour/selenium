@@ -7,8 +7,7 @@
     <test name="login with parallel chrome.java">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.ConduitTest">
-            </class>
+            <class name="com.exalt.tests.ConduitTest"></class>
         </classes>
     </test>
 </suite>

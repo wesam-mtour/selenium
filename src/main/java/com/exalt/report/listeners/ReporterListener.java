@@ -21,7 +21,7 @@ public class ReporterListener implements IReporter {
     final static String PASSED_TESTS_REPORT_LINK = "../test-output/Passed Tests Report.html";
     final static String FAILED_TESTS_REPORT_LINK = "../test-output/Failed Tests Report.html";
     final static String SKIPPED_TESTS_REPORT_LINK = "../test-output/Skipped Tests Report.html";
-
+    final static String PACKAGES_NAME = "com.exalt.infra.dataprovider.datareader.";
 
     int totalNumberOfPassedMethods = 0;
     int totalNumberOfFailedMethods = 0;
@@ -116,7 +116,7 @@ public class ReporterListener implements IReporter {
         for (ITestResult testResult : tc.getSkippedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
                 if (testResult.getParameters().length != 0) {
-                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    String ClassName = PACKAGES_NAME + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
                     Object instance = dataClass.newInstance();
                     String methodName = "getExcelData";
@@ -170,7 +170,7 @@ public class ReporterListener implements IReporter {
         for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
                 if (testResult.getParameters().length != 0) {
-                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    String ClassName = PACKAGES_NAME + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
                     Object instance = dataClass.newInstance();
                     String methodName = "getExcelData";
@@ -221,7 +221,7 @@ public class ReporterListener implements IReporter {
             List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
             if (!(map.containsKey(testResult.getName()))) {
                 if (testResult.getParameters().length != 0) {
-                    String ClassName = "com.exalt.dataproviderinfra.datareader." + testResult.getName();
+                    String ClassName = PACKAGES_NAME + testResult.getName();
                     Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
                     Object instance = dataClass.newInstance();
                     String methodName = "getExcelData";

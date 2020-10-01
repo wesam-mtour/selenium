@@ -65,8 +65,7 @@ public class ConduitNewArticlePage {
         wait.until(ExpectedConditions.titleIs(title + " — Conduit"));
         //}
         //catch (Exception e) {
-
-//            if (title.isEmpty()&&body.isEmpty()&&articleAbout.isEmpty()){
+//            if (&&body.isEmpty()&&articleAbout.isEmpty()){
 //                wait.until(ExpectedConditions.visibilityOf(titleErrorMessages));
 //                wait.until(ExpectedConditions.visibilityOf(bodyErrorMessages));
 //                wait.until(ExpectedConditions.visibilityOf(articleAboutErrorMessages));

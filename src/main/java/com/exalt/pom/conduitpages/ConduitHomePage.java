@@ -20,6 +20,9 @@ public class ConduitHomePage {
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
     WebElement userProfileLink;
+
+    @FindBy(how = How.LINK_TEXT, using = "Sign in")
+    WebElement signInLink;
     /*
      end top navigation bar
      */
@@ -51,5 +54,7 @@ public class ConduitHomePage {
         ActionsFinder.click(globalFeedLink);
     }
 
-
+    public void getSignInLink() {
+        ActionsFinder.click(signInLink);
+    }
 }

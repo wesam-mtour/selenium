@@ -113,7 +113,7 @@ public final class ActionsFinder<T> {
         Assert.assertNull(webElement.getAttribute("value"));
     }
 
-    public static String getTitle() {
+    public static String getTitle() throws InterruptedException {
         return webDriver.getTitle();
     }
 

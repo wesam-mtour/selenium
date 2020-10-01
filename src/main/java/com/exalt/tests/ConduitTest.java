@@ -16,16 +16,39 @@ public class ConduitTest {
     private ConduitProfilePage conduitProfilePage;
     private ConduitHomePage conduitHomePage;
     private ConduitArticlePreviewPage conduitArticlePreviewPage;
-    private ConduitUserSettings conduitUserSettings;
+    private ConduitUserSettingsPage conduitUserSettingsPage;
 
     private String testingEmail = "wiasm.mtour@gmail.com";
-    private String testingPassword = "11225544";
+    private String testingPassword = "123456789";
+    private String testingErrorMessage = "email or password is invalid";
 
+
+//    @BeforeClass
+//    @Parameters("browser")
+//    public void setUpObjects(String browser) throws Exception {
+//        webDriver = BrowserFactory.startWebDriver(browser, WEB_DRIVER_URL);
+//        conduitLoginPage = new ConduitLoginPage(webDriver);
+//        conduitHomePage = new ConduitHomePage(webDriver);
+//        conduitNewArticlePage = new ConduitNewArticlePage(webDriver);
+//        conduitGlobalFeedPage = new ConduitGlobalFeedPage(webDriver);
+//        conduitProfilePage = new ConduitProfilePage(webDriver);
+//        conduitArticlePreviewPage = new ConduitArticlePreviewPage(webDriver);
+//        conduitUserSettingsPage = new ConduitUserSettingsPage(webDriver);
+//    }
 
     @BeforeMethod
     @Parameters("browser")
     public void setup(String browser) throws Exception {
         webDriver = BrowserFactory.startWebDriver(browser, WEB_DRIVER_URL);
+        conduitLoginPage = new ConduitLoginPage(webDriver);
+        conduitHomePage = new ConduitHomePage(webDriver);
+        conduitNewArticlePage = new ConduitNewArticlePage(webDriver);
+        conduitGlobalFeedPage = new ConduitGlobalFeedPage(webDriver);
+        conduitProfilePage = new ConduitProfilePage(webDriver);
+        conduitArticlePreviewPage = new ConduitArticlePreviewPage(webDriver);
+        conduitUserSettingsPage = new ConduitUserSettingsPage(webDriver);
+        conduitLoginPage.logIn(testingEmail, testingPassword);
+
     }
 
     @AfterMethod
@@ -35,61 +58,40 @@ public class ConduitTest {
     }
 
     @Test(enabled = false, dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
-    public void ConduitLoginTest(String run, String email, String password) throws InterruptedException {
-        if (run.equals("no")) {
-            throw new SkipException("Skipping tests because resource was not available.");
-        } else {
-            conduitLoginPage = new ConduitLoginPage(webDriver);
-            conduitLoginPage.loginWithEmailAndPassword(email, password);
-        }
+    public void ConduitLoginTest(String email, String password, String expectedErrorMessage) throws InterruptedException {
+        conduitLoginPage.loginWithEmailAndPassword(email, password, expectedErrorMessage);
     }
 
     @Test(enabled = false, dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
-    void ConduitPostNewArticleTest(String run, String title, String articleAbout, String body, String endTag) throws InterruptedException {
-        if (run.equals("no")) {
-            throw new SkipException("Skipping tests because resource was not available.");
-        } else {
-            conduitLoginPage = new ConduitLoginPage(webDriver);
-            conduitLoginPage.loginWithEmailAndPassword(testingEmail, testingPassword);
-            conduitHomePage = new ConduitHomePage(webDriver);
-            conduitHomePage.getNewArticleLink();
-            conduitNewArticlePage = new ConduitNewArticlePage(webDriver);
-            conduitNewArticlePage.postNewArticle(title, articleAbout, body, endTag);
-        }
+    void ConduitPostNewArticleTest(String title, String articleAbout, String body, String endTag) throws InterruptedException {
+        conduitHomePage.getNewArticleLink();
+        conduitNewArticlePage.postNewArticle(title, articleAbout, body, endTag);
+
     }
 
     @Test(enabled = false)
     void ConduitLikeTest() throws InterruptedException {
-        conduitLoginPage = new ConduitLoginPage(webDriver);
-        conduitLoginPage.loginWithEmailAndPassword(testingEmail, testingPassword);
-        conduitHomePage = new ConduitHomePage(webDriver);
         conduitHomePage.getGlobalFeedLink();
-        conduitGlobalFeedPage = new ConduitGlobalFeedPage(webDriver);
         conduitGlobalFeedPage.applyLike();
         conduitGlobalFeedPage.applyDisLike();
+
     }
 
     @Test(enabled = false)
     void ConduitDeleteArticleTest() throws InterruptedException {
-        conduitLoginPage = new ConduitLoginPage(webDriver);
-        conduitLoginPage.loginWithEmailAndPassword(testingEmail, testingPassword);
-        conduitHomePage = new ConduitHomePage(webDriver);
         conduitHomePage.getUserProfileLink();
-        conduitProfilePage = new ConduitProfilePage(webDriver);
         conduitProfilePage.getArticlePreview();
-
-        conduitArticlePreviewPage = new ConduitArticlePreviewPage(webDriver);
         conduitArticlePreviewPage.deleteArticle();
     }
 
-    @Test(enabled = true)
-    void ConduitSetNewPasswordTest() throws InterruptedException {
-        conduitLoginPage = new ConduitLoginPage(webDriver);
-        conduitLoginPage.loginWithEmailAndPassword(testingEmail, testingPassword);
-        conduitHomePage = new ConduitHomePage(webDriver);
+    @Test(enabled = true, dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
+    void ConduitSetNewPasswordTest(String newPassword, String errorMessage) throws InterruptedException {
         conduitHomePage.getSettingsLink();
-        conduitUserSettings = new ConduitUserSettings(webDriver);
-        conduitUserSettings.setNewPassword("123456789");
+        conduitUserSettingsPage.setNewPassword(newPassword, errorMessage);
+        conduitHomePage.getSettingsLink();
+        conduitUserSettingsPage.getOrClickHereToLogoutButton();
+        conduitHomePage.getSignInLink();
+        conduitLoginPage.loginWithEmailAndPassword(testingEmail,newPassword,testingErrorMessage);
     }
 }
 

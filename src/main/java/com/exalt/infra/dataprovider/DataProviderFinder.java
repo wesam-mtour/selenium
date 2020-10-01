@@ -2,6 +2,7 @@ package com.exalt.infra.dataprovider;
 
 import com.exalt.infra.dataprovider.datareader.ConduitLoginTest;
 import com.exalt.infra.dataprovider.datareader.ConduitPostNewArticleTest;
+import com.exalt.infra.dataprovider.datareader.ConduitSetNewPasswordTest;
 import org.jetbrains.annotations.NotNull;
 import org.testng.annotations.DataProvider;
 
@@ -17,7 +18,10 @@ public final class DataProviderFinder<T> {
             return ConduitLoginTest.getCredentials();
         } else if (method.getName().equals("ConduitPostNewArticleTest")) {
             return ConduitPostNewArticleTest.getPosters();
-        } else {
+        } else if (method.getName().equals("ConduitSetNewPasswordTest")){
+            return ConduitSetNewPasswordTest.getNewPasswords();
+        }
+        else{
             return null;
         }
     }

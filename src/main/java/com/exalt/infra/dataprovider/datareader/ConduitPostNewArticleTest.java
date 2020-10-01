@@ -37,7 +37,7 @@ public class ConduitPostNewArticleTest {
         /*
          Or you can use a for-each loop to iterate over the rows and columns
          */
-        Object[][] posters = new Object[sheet.getLastRowNum()][5];
+        Object[][] posters = new Object[sheet.getLastRowNum()][4];
         for (int i = 1, j = 0; i <= sheet.getLastRowNum(); ++i, ++j) {
             row = sheet.getRow(i);
             excelData.put(i - 1, new ArrayList<String>(Arrays.asList(
@@ -45,11 +45,13 @@ public class ConduitPostNewArticleTest {
                     dataFormatter.formatCellValue(row.getCell(1)),
                     dataFormatter.formatCellValue(row.getCell(2)),
                     "pass")));
-            posters[j][0] = dataFormatter.formatCellValue(row.getCell(0));
-            posters[j][1] = dataFormatter.formatCellValue(row.getCell(3));
-            posters[j][2] = dataFormatter.formatCellValue(row.getCell(4));
-            posters[j][3] = dataFormatter.formatCellValue(row.getCell(5));
-            posters[j][4] = dataFormatter.formatCellValue(row.getCell(6));
+            if (excelData.get(i-1).get(0).equals("yes")){
+            posters[j][0] = dataFormatter.formatCellValue(row.getCell(3));
+            posters[j][1] = dataFormatter.formatCellValue(row.getCell(4));
+            posters[j][2] = dataFormatter.formatCellValue(row.getCell(5));
+            posters[j][3] = dataFormatter.formatCellValue(row.getCell(6));
+        }else {
+            }
         }
         /*
          Closing the workbook

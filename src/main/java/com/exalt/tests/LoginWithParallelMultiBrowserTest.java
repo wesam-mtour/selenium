@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
 public class LoginWithParallelMultiBrowserTest {
-
-
     final String WEB_DRIVER_URL = "https://demo.productionready.io/#/";
     private WebDriver webDriver;
     private LoginPage loginPage;

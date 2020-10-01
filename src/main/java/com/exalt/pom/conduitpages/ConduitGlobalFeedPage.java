@@ -3,9 +3,12 @@ package com.exalt.pom.conduitpages;
 import com.exalt.infra.actions.ActionsFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class ConduitGlobalFeedPage {
     private WebDriver webDriver;
@@ -29,6 +32,13 @@ public class ConduitGlobalFeedPage {
     @FindBy(how = How.CSS, using = "span[class=\"ng-binding ng-scope\"]")
     WebElement numberOfLikes;
 
+
+
+    @FindBy(how = How.TAG_NAME, using = "favorite-btn")
+    List<WebElement> allLinks;
+
+
+
     public ConduitGlobalFeedPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         /*
@@ -37,14 +47,20 @@ public class ConduitGlobalFeedPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void applyLike()  {
+    public void asds() {
+        for (WebElement link : allLinks) {
+            applyLike();
+            applyDisLike();
+        }
+    }
+    public void applyLike() {
         String oldValue = ActionsFinder.getText(numberOfLikes);
         ActionsFinder.click(likeButton);
         String newValue = ActionsFinder.getText(numberOfLikes, String.valueOf(Integer.valueOf(oldValue) + 1));
         ActionsFinder.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue) + 1));
     }
 
-    public void applyDisLike()  {
+    public void applyDisLike() {
         String oldValue = ActionsFinder.getText(numberOfLikes);
         ActionsFinder.click(likeButton);
         String newValue = ActionsFinder.getText(numberOfLikes, String.valueOf(Integer.valueOf(oldValue) - 1));
