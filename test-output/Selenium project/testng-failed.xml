@@ -10,9 +10,9 @@
     <classes>
       <class name="com.exalt.tests.ConduitTest">
         <methods>
-          <include name="tearDown"/>
           <include name="setup"/>
-          <include name="ConduitSetNewPasswordTest" invocation-numbers="1"/>
+          <include name="ConduitChangeOldPasswordToValidPasswordTest" invocation-numbers="0 1 2 3"/>
+          <include name="setUpObjects"/>
         </methods>
       </class> <!-- com.exalt.tests.ConduitTest -->
     </classes>

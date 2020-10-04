@@ -32,6 +32,9 @@ public final class ActionsFinder<T> {
         return webElement.isDisplayed();
     }
 
+    public static void isNotDisplayed(@NotNull WebElement webElement) {
+        wait.until(ExpectedConditions.invisibilityOf(webElement));
+    }
     public static boolean isSelected(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeSelected(webElement));
         return webElement.isSelected();

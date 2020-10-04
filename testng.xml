@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium project">
-    <listeners>
-        <listener class-name="com.exalt.report.listeners.ReporterListener"/>
-    </listeners>
-    <test name="login with parallel chrome.java">
+<suite name="All Test Suite">
+        <listeners>
+            <listener class-name="com.exalt.report.listeners.ReporterListener"/>
+        </listeners>
+    <test name="LoginTest">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.ConduitTest"></class>
+            <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest"></class>
         </classes>
     </test>
 </suite>

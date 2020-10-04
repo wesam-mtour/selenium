@@ -12,10 +12,11 @@ import static com.exalt.infra.utils.Constants.*;
 
 public class ConduitUserSettingsPage {
     private WebDriver webDriver;
+
     /*
-    Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
-     a list of elements. Used in conjunction with PageFactory this allows users to quickly and easily create PageObjects
-     */
+        Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
+         a list of elements. Used in conjunction with PageFactory this allows users to quickly and easily create PageObjects
+         */
     /*
      top navigation bar
      */
@@ -48,6 +49,7 @@ public class ConduitUserSettingsPage {
     @FindBy(how = How.CSS, using = "button[class=\"btn btn-outline-danger\"]")
     WebElement orClickHereToLogoutButton;
 
+
     public ConduitUserSettingsPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         /*
@@ -56,20 +58,64 @@ public class ConduitUserSettingsPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void setNewPassword(String newPassword, String expectedErrorMessage) {
+    public void changeOldPasswordToInvalidPassword(String newPassword) {
         ActionsFinder.sendKeys(this.password, newPassword);
         ActionsFinder.click(updateSettingsButton);
-        try {
-            ActionsFinder.isDisplayed(this.errorMessage);
-            webDriver.getTitle().equals(SETTINGS_PAGE);
-            ActionsFinder.assertEquals(this.errorMessage.getText(), expectedErrorMessage);
-        } catch (Exception e) {
-            ActionsFinder.assertEquals(webDriver.getTitle(), "@" + ActionsFinder.getText(userProfileLink) + " — Conduit");
-        }
+        ActionsFinder.isDisplayed(this.errorMessage);
     }
 
-    public void getOrClickHereToLogoutButton() {
-        ActionsFinder.click(orClickHereToLogoutButton);
+    public void changeOldPasswordToValidPassword(String newPassword) {
+        ActionsFinder.sendKeys(this.password, newPassword);
+        ActionsFinder.click(updateSettingsButton);
+    }
+
+
+    public void clickHomeLink() {
+        ActionsFinder.click(this.homeLink);
+    }
+
+    public void clickNewArticleLink() {
+        ActionsFinder.click(this.newArticleLink);
+    }
+
+    public void clickUserProfileLink() {
+        ActionsFinder.click(this.userProfileLink);
+    }
+
+    public WebElement getUserProfileLink() {
+        return this.userProfileLink;
+    }
+
+    public WebElement getErrorMessage() {
+        return this.errorMessage;
+    }
+
+    public WebElement getUrlProfilePicture() {
+        return this.urlProfilePicture;
+    }
+
+    public WebElement getUserName() {
+        return this.userName;
+    }
+
+    public WebElement getBio() {
+        return this.bio;
+    }
+
+    public WebElement getEmail() {
+        return this.email;
+    }
+
+    public WebElement getPassword() {
+        return this.password;
+    }
+
+    public void clickUpdateSettingsButton() {
+        ActionsFinder.click(this.updateSettingsButton);
+    }
+
+    public void clickHereToLogoutButton() {
+        ActionsFinder.click(this.orClickHereToLogoutButton);
     }
 
 

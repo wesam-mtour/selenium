@@ -18,7 +18,7 @@ public class BrowserFactory {
     private static final int TIME_OUT = 5;
     private static WebDriverWait wait;
 
-    public static WebDriver startWebDriver(@NotNull String browserName, String url) throws Exception {
+    public static WebDriver startWebDriver(@NotNull String browserName) throws Exception {
 
         switch (browserName.toLowerCase()) {
             /*
@@ -60,12 +60,12 @@ public class BrowserFactory {
             default:
                 System.out.println("Browser not Found ");
         }
-        openUrl(url);
+//        openUrl(url);
         setWaitInstance();
         return webDriver;
     }
 
-    private static void openUrl(String url) {
+    public static void openUrl(String url) {
         webDriver.get(url);
     }
 

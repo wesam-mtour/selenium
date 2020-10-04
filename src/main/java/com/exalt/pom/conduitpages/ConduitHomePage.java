@@ -37,7 +37,7 @@ public class ConduitHomePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void getNewArticleLink() {
+    public void clickNewArticleLink() {
         ActionsFinder.click(newArticleLink);
     }
 
@@ -46,15 +46,15 @@ public class ConduitHomePage {
     }
 
 
-    public void getUserProfileLink() {
+    public void clickUserProfileLink() {
         ActionsFinder.click(userProfileLink);
     }
 
-    public void getGlobalFeedLink() {
+    public void clickGlobalFeedLink() {
         ActionsFinder.click(globalFeedLink);
     }
 
-    public void getSignInLink() {
+    public void clickSignInLink() {
         ActionsFinder.click(signInLink);
     }
 }

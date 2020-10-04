@@ -30,7 +30,7 @@ public class ConduitArticlePreviewPage {
      end top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Edit Article")
-    WebElement  editArticleLink;
+    WebElement editArticleButton;
 
     @FindBy(how = How.CSS, using = "button[class=\"btn btn-outline-danger btn-sm\"]")
     WebElement deleteArticleButton;
@@ -49,4 +49,51 @@ public class ConduitArticlePreviewPage {
         ActionsFinder.waitTitleToBe(HOME_PAGE,wait);
     }
 
+    public WebElement getHomeLink() {
+        return this.homeLink;
+    }
+
+    public void clickHomeLink() {
+ActionsFinder.click(this.homeLink);
+    }
+
+    public WebElement getNewArticleLink() {
+        return this.newArticleLink;
+    }
+
+    public void clickNewArticleLink() {
+        ActionsFinder.click(this.newArticleLink);
+    }
+
+    public WebElement getSettingsLink() {
+        return this.settingsLink;
+    }
+
+    public void clickSettingsLink() {
+        ActionsFinder.click(this.settingsLink);
+    }
+
+    public WebElement getUserProfileLink() {
+        return this.userProfileLink;
+    }
+
+    public void clickUserProfileLink() {
+        ActionsFinder.click(this.userProfileLink);
+    }
+
+    public WebElement getEditArticleButton() {
+        return this.editArticleButton;
+    }
+
+    public void clickEditArticleButton() {
+        ActionsFinder.click(this.editArticleButton);
+    }
+
+    public WebElement getDeleteArticleButton() {
+        return this.deleteArticleButton;
+    }
+
+    public void clickDeleteArticleButton() {
+        ActionsFinder.click(this.deleteArticleButton);
+    }
 }

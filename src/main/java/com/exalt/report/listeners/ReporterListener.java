@@ -1,5 +1,6 @@
 package com.exalt.report.listeners;
 
+import com.exalt.infra.dataprovider.DataProviderFinder;
 import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
@@ -42,48 +43,27 @@ public class ReporterListener implements IReporter {
                 /*
                 Writing a report of Failed  tests
                  */
-                try {
                     writeFailedTestReport(sr, tc);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+
                 /*
                 Writing a report of successful tests
                  */
-                try {
+
                     writePassedTestReport(sr, tc);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    writeSkippedTestReport(sr, tc);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+
+//                try {
+//                    writeSkippedTestReport(sr, tc);
+//                } catch (ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                } catch (InstantiationException e) {
+//                    e.printStackTrace();
+//                } catch (NoSuchMethodException e) {
+//                    e.printStackTrace();
+//                } catch (InvocationTargetException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         }
@@ -155,8 +135,7 @@ public class ReporterListener implements IReporter {
 
     }
 
-    private void writePassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-
+    private void writePassedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc)  {
         Map<String, String> map = new HashMap<String, String>();
         PassedTestsReport.concat(
                 "<h2>Suite:" + tc.getName() + "</h2>" +
@@ -170,21 +149,21 @@ public class ReporterListener implements IReporter {
         for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
             if (!(map.containsKey(testResult.getName()))) {
                 if (testResult.getParameters().length != 0) {
-                    String ClassName = PACKAGES_NAME + testResult.getName();
-                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
-                    Object instance = dataClass.newInstance();
-                    String methodName = "getExcelData";
-                    Method getNameMethod = instance.getClass().getMethod(methodName);
-                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
-                    for (int i = 0; i < excelData.size(); ++i) {
-                        if (excelData.get(i).get(3).equals("pass") && excelData.get(i).get(0).equals("yes")) {
+//                    String ClassName = PACKAGES_NAME + testResult.getName();
+//                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
+//                    Object instance = dataClass.newInstance();
+//                    String methodName = "getExcelData";
+//                    Method getNameMethod = instance.getClass().getMethod(methodName);
+//                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
+                    for (int i = 0; i < DataProviderFinder.excelData.size(); ++i) {
+                        if (DataProviderFinder.excelData.get(i).get(3).equals("pass")) {
                             PassedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
                                             "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + excelData.get(i).get(2) + "</td>" +
-                                            "<td>" + excelData.get(i).get(1) + " </td>" +
+                                            "<td>" + DataProviderFinder.excelData.get(i).get(2) + "</td>" +
+                                            "<td>" + DataProviderFinder.excelData.get(i).get(1) + " </td>" +
                                             "</tr>");
                         }
                     }
@@ -205,7 +184,7 @@ public class ReporterListener implements IReporter {
         PassedTestsReport.concat("</table>");
     }
 
-    private void writeFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+    private void writeFailedTestReport(@NotNull ISuiteResult sr, @NotNull ITestContext tc)  {
         Map<String, String> map = new HashMap<String, String>();
         FailedTestsReport.concat(
                 "<h2>Suite:" + tc.getName() + "</h2>" +
@@ -221,25 +200,23 @@ public class ReporterListener implements IReporter {
             List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
             if (!(map.containsKey(testResult.getName()))) {
                 if (testResult.getParameters().length != 0) {
-                    String ClassName = PACKAGES_NAME + testResult.getName();
-                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
-                    Object instance = dataClass.newInstance();
-                    String methodName = "getExcelData";
-                    Method getNameMethod = instance.getClass().getMethod(methodName);
-                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
-
+//                    String ClassName = PACKAGES_NAME + testResult.getName();
+//                    Class<?> dataClass = Class.forName(ClassName); // convert string classname to class
+//                    Object instance = dataClass.newInstance();
+//                    String methodName = "getExcelData";
+//                    Method getNameMethod = instance.getClass().getMethod(methodName);
+//                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
                     for (int index : FailedInvocationList) {
-                        if (excelData.get(index).get(0).equals("yes")) {
                             FailedTestsReport.concat(
                                     "<tr>" +
                                             "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + excelData.get(index).get(2) + "</td>" +
-                                            "<td>" + excelData.get(index).get(1) + " </td>" +
-                                            "<td>" + testResult.getThrowable().getMessage().substring(0, 158) + " </td>" +
+                                            "<td>" + DataProviderFinder.excelData.get(index).get(2) + "</td>" +
+                                            "<td>" + DataProviderFinder.excelData.get(index).get(1) + " </td>" +
+                                            "<td>" + testResult.getThrowable().getMessage()+ " </td>" +
                                             "</tr>");
-                            excelData.get(index).set(3, "failed");
-                        }
+                        DataProviderFinder.excelData.get(index).set(3, "failed");
+
                     }
 
                 } else {

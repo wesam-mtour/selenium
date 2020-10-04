@@ -1,25 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium project" parallel="classes" thread-count="2">
-    <listeners>
-        <listener class-name="com.exalt.report.listeners.ReporterListener"/>
-    </listeners>
-    <test name="login with parallel chrome.java">
-        <parameter name="browser" value="Chrome"></parameter>
-        <classes>
-            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest"></class>
-            <class name="com.exalt.tests.DemoTest"></class>
-        </classes>
-    </test>
-    <test name="login with parallel firefox java">
-        <parameter name="browser" value="Firefox"></parameter>
-        <classes>
-            <class name="com.exalt.tests.LoginWithParallelMultiBrowserTest">
-                <methods>
-                    <exclude name="" />
-                </methods>
-            </class>
-
-        </classes>
-    </test>
-</suite>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">-->
+<!--<suite name="Selenium project">-->
+<!--    <listeners>-->
+<!--        <listener class-name="com.exalt.report.listeners.ReporterListener"/>-->
+<!--    </listeners>-->
+<!--    <parameter name="browser" value="Chrome"></parameter>-->
+<!--    <test name="login with parallel chrome.java">-->
+<!--        <parameter name="browser" value="Chrome"></parameter>-->
+<!--        <classes>-->
+<!--            <class name="com.exalt.tests.ConduitTest"></class>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--</suite>-->
