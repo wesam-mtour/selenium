@@ -13,21 +13,21 @@ public class ConduitHomePage {
      top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "New Article")
-    WebElement newArticleLink;
+    public WebElement newArticleLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Settings")
-    WebElement settingsLink;
+    public WebElement settingsLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    WebElement userProfileLink;
+    public WebElement userProfileLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Sign in")
-    WebElement signInLink;
+    public WebElement signInLink;
     /*
      end top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Global Feed")
-    WebElement globalFeedLink;
+    public WebElement globalFeedLink;
 
     public ConduitHomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -41,7 +41,7 @@ public class ConduitHomePage {
         ActionsFinder.click(newArticleLink);
     }
 
-    public void getSettingsLink() {
+    public void clickSettingsLink() {
         ActionsFinder.click(settingsLink);
     }
 

@@ -13,8 +13,7 @@ import org.testng.Assert;
 public final class ActionsFinder<T> {
 
     private static WebDriver webDriver = BrowserFactory.getWebDriver();
-    private static final int TIME_OUT = 5;
-    private static WebDriverWait wait = BrowserFactory.getWaitInstance();
+    private static WebDriverWait wait = BrowserFactory. getWaitInstance();
 
     public static void click(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
@@ -120,7 +119,10 @@ public final class ActionsFinder<T> {
         return webDriver.getTitle();
     }
 
-    public static void waitTitleToBe(String expectedTitle, @NotNull WebDriverWait waitt) {
-        waitt.until(ExpectedConditions.titleIs(expectedTitle));
+    public static void waitTitleToBe(String expectedTitle, @NotNull WebDriverWait wait1) {
+        wait1.until(ExpectedConditions.titleIs(expectedTitle));
+    }
+    public static void waitTitleToBe(String expectedTitle) {
+        wait.until(ExpectedConditions.titleIs(expectedTitle));
     }
 }

@@ -21,33 +21,32 @@ public class ConduitUserSettingsPage {
      top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Home")
-    WebElement homeLink;
+    public WebElement homeLink;
 
     @FindBy(how = How.LINK_TEXT, using = "New Article")
-    WebElement newArticleLink;
+    public WebElement newArticleLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    WebElement userProfileLink;
+    public WebElement userProfileLink;
     /*
      end top navigation bar
      */
     @FindBy(how = How.CSS, using = "li[ng-repeat=\"error in errors\"]")
-    WebElement errorMessage;
+    public WebElement errorMessage;
     @FindBy(how = How.CSS, using = "input[placeholder=\"URL of profile picture\"]")
-    WebElement urlProfilePicture;
+    public WebElement urlProfilePicture;
     @FindBy(how = How.CSS, using = "input[placeholder=\"Username\"]")
-    WebElement userName;
+    public WebElement userName;
     @FindBy(how = How.CSS, using = "textarea[placeholder=\"Short bio about you\"]")
-    WebElement bio;
+    public WebElement bio;
     @FindBy(how = How.CSS, using = "input[type=\"email\"]")
-    WebElement email;
+    public WebElement email;
     @FindBy(how = How.CSS, using = "input[type=\"password\"]")
-    WebElement password;
+    public WebElement password;
     @FindBy(how = How.CSS, using = "button[type=\"submit\"]")
-    WebElement updateSettingsButton;
-
+    public WebElement updateSettingsButton;
     @FindBy(how = How.CSS, using = "button[class=\"btn btn-outline-danger\"]")
-    WebElement orClickHereToLogoutButton;
+    public WebElement orClickHereToLogoutButton;
 
 
     public ConduitUserSettingsPage(WebDriver webDriver) {
@@ -80,34 +79,6 @@ public class ConduitUserSettingsPage {
 
     public void clickUserProfileLink() {
         ActionsFinder.click(this.userProfileLink);
-    }
-
-    public WebElement getUserProfileLink() {
-        return this.userProfileLink;
-    }
-
-    public WebElement getErrorMessage() {
-        return this.errorMessage;
-    }
-
-    public WebElement getUrlProfilePicture() {
-        return this.urlProfilePicture;
-    }
-
-    public WebElement getUserName() {
-        return this.userName;
-    }
-
-    public WebElement getBio() {
-        return this.bio;
-    }
-
-    public WebElement getEmail() {
-        return this.email;
-    }
-
-    public WebElement getPassword() {
-        return this.password;
     }
 
     public void clickUpdateSettingsButton() {

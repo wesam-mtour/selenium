@@ -17,21 +17,21 @@ public class ConduitProfilePage {
      top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Home")
-    WebElement homeLink;
+    public WebElement homeLink;
 
     @FindBy(how = How.LINK_TEXT, using = "New Article")
-    WebElement newArticleLink;
+    public WebElement newArticleLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Settings")
-    WebElement settingsLink;
+    public WebElement settingsLink;
     /*
      end top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Edit Profile Settings")
-    WebElement editProfileSettingsButton;
+    public WebElement editProfileSettingsButton;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.article({ slug: $ctrl.article.slug })\"]")
-    WebElement articlePreview;
+    public WebElement articlePreview;
 
     public ConduitProfilePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -39,10 +39,6 @@ public class ConduitProfilePage {
         This initElements method will create all WebElements
          */
         PageFactory.initElements(webDriver, this);
-    }
-
-    public void clickArticlePreview() throws InterruptedException {
-        ActionsFinder.click(articlePreview);
     }
 
     public void clickHomeLink() {
@@ -56,4 +52,13 @@ public class ConduitProfilePage {
     public void clickSettingsLink() {
         ActionsFinder.click(this.settingsLink);
     }
+
+    public void clickArticlePreview() {
+        ActionsFinder.click(articlePreview);
+    }
+
+    public void clickEditProfileSettingsButton() {
+        ActionsFinder.click(editProfileSettingsButton);
+    }
+
 }

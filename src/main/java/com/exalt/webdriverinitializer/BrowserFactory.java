@@ -60,7 +60,6 @@ public class BrowserFactory {
             default:
                 System.out.println("Browser not Found ");
         }
-//        openUrl(url);
         setWaitInstance();
         return webDriver;
     }

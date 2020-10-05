@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-        <listeners>
-            <listener class-name="com.exalt.report.listeners.ReporterListener"/>
-        </listeners>
-    <test name="LoginTest">
+    <listeners>
+        <listener class-name="com.exalt.report.listeners.ReporterListener"/>
+    </listeners>
+    <test name="ArticleTest">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest"></class>
+            <class name="com.exalt.tests.conduittests.home.GlobalTest"></class>
         </classes>
     </test>
 </suite>

@@ -3,7 +3,6 @@ package com.exalt.pom.conduitpages;
 import com.exalt.infra.actions.ActionsFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -16,28 +15,24 @@ public class ConduitGlobalFeedPage {
      top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "New Article")
-    WebElement newArticleLink;
+   public WebElement newArticleLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Settings")
-    WebElement settingsLink;
+    public WebElement settingsLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    WebElement userProfileLink;
+    public WebElement userProfileLink;
     /*
      end top navigation bar
      */
     @FindBy(how = How.CSS, using = "favorite-btn[article=\"$ctrl.article\"]")
-    WebElement likeButton;
+    public WebElement likeButton;
 
     @FindBy(how = How.CSS, using = "span[class=\"ng-binding ng-scope\"]")
-    WebElement numberOfLikes;
-
-
+    public WebElement numberOfLikes;
 
     @FindBy(how = How.TAG_NAME, using = "favorite-btn")
-    List<WebElement> allLinks;
-
-
+    public List<WebElement> allLinks;
 
     public ConduitGlobalFeedPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -47,23 +42,15 @@ public class ConduitGlobalFeedPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void asds() {
-        for (WebElement link : allLinks) {
-            applyLike();
-            applyDisLike();
-        }
-    }
-    public void applyLike() {
-        String oldValue = ActionsFinder.getText(numberOfLikes);
-        ActionsFinder.click(likeButton);
-        String newValue = ActionsFinder.getText(numberOfLikes, String.valueOf(Integer.valueOf(oldValue) + 1));
-        ActionsFinder.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue) + 1));
+    public void clickNewArticleLink() {
+        ActionsFinder.click(newArticleLink);
     }
 
-    public void applyDisLike() {
-        String oldValue = ActionsFinder.getText(numberOfLikes);
+    public void clickUserProfileLink() {
+        ActionsFinder.click(userProfileLink);
+    }
+
+    public void clickLikeButton() {
         ActionsFinder.click(likeButton);
-        String newValue = ActionsFinder.getText(numberOfLikes, String.valueOf(Integer.valueOf(oldValue) - 1));
-        ActionsFinder.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue) - 1));
     }
 }

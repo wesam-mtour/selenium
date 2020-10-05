@@ -4,10 +4,10 @@
     <listeners>
         <listener class-name="com.exalt.report.listeners.ReporterListener"/>
     </listeners>
-    <test name="LoginTest">
+    <test name="ArticleTest">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.conduittests.login.LoginTest"></class>
+            <class name="com.exalt.tests.conduittests.article.ArticleTest"></class>
         </classes>
     </test>
 </suite>

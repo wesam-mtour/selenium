@@ -16,25 +16,24 @@ public class ConduitArticlePreviewPage {
      top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Home")
-    WebElement homeLink;
+    public WebElement homeLink;
 
     @FindBy(how = How.LINK_TEXT, using = "New Article")
-    WebElement newArticleLink;
+    public WebElement newArticleLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Settings")
-    WebElement settingsLink;
+    public WebElement settingsLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    WebElement userProfileLink;
+    public WebElement userProfileLink;
     /*
      end top navigation bar
      */
     @FindBy(how = How.LINK_TEXT, using = "Edit Article")
-    WebElement editArticleButton;
+    public WebElement editArticleButton;
 
     @FindBy(how = How.CSS, using = "button[class=\"btn btn-outline-danger btn-sm\"]")
-    WebElement deleteArticleButton;
-
+    public WebElement deleteArticleButton;
 
     public ConduitArticlePreviewPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -43,55 +42,36 @@ public class ConduitArticlePreviewPage {
          */
         PageFactory.initElements(webDriver, this);
     }
+
     public void deleteArticle() throws InterruptedException {
         ActionsFinder.click(deleteArticleButton);
-        WebDriverWait wait = new WebDriverWait(webDriver,5);
-        ActionsFinder.waitTitleToBe(HOME_PAGE,wait);
     }
 
-    public WebElement getHomeLink() {
-        return this.homeLink;
-    }
 
     public void clickHomeLink() {
-ActionsFinder.click(this.homeLink);
+        ActionsFinder.click(this.homeLink);
     }
 
-    public WebElement getNewArticleLink() {
-        return this.newArticleLink;
-    }
 
     public void clickNewArticleLink() {
         ActionsFinder.click(this.newArticleLink);
     }
 
-    public WebElement getSettingsLink() {
-        return this.settingsLink;
-    }
 
     public void clickSettingsLink() {
         ActionsFinder.click(this.settingsLink);
     }
 
-    public WebElement getUserProfileLink() {
-        return this.userProfileLink;
-    }
 
     public void clickUserProfileLink() {
         ActionsFinder.click(this.userProfileLink);
     }
 
-    public WebElement getEditArticleButton() {
-        return this.editArticleButton;
-    }
 
     public void clickEditArticleButton() {
         ActionsFinder.click(this.editArticleButton);
     }
 
-    public WebElement getDeleteArticleButton() {
-        return this.deleteArticleButton;
-    }
 
     public void clickDeleteArticleButton() {
         ActionsFinder.click(this.deleteArticleButton);

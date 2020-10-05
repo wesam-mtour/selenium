@@ -27,24 +27,23 @@ public class ConduitLoginPage {
     private final int TIME_OUT = 5;
 
     private String testingEmail = "wiasm.mtour@gmail.com";
-    private String testingPassword = "11223344";
+    private String testingPassword = "123456789";
     private String testingErrorMessage = "email or password is invalid";
 
-    /*
-            Used to mark a field on a Page Object to indicate an alternative mechanism for locating the element or
-             a list of elements. Used in conjunction with PageFactory this allows users to quickly and easily create PageObjects
-             */
     @FindBy(how = How.CSS, using = "input[type=\"email\"]")
-    WebElement email;
+    public WebElement email;
+
+    @FindBy(how = How.XPATH, using = "/html/head/title")
+    public WebElement titlee;
 
     @FindBy(how = How.CSS, using = "input[type=\"password\"]")
-    WebElement password;
+    public WebElement password;
 
     @FindBy(how = How.CSS, using = "button[type=\"submit\"]")
-    WebElement signInButton;
+    public WebElement signInButton;
 
     @FindBy(how = How.CSS, using = "li[ng-repeat=\"error in errors\"]")
-    WebElement errorMessage;
+    public WebElement errorMessage;
 
     public ConduitLoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -55,50 +54,21 @@ public class ConduitLoginPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void loginWithInvalidCredentials(String email, String password, String expectedErrorMessage) {
-        ActionsFinder.sendKeys(this.email, email);
-        ActionsFinder.sendKeys(this.password, password);
-        ActionsFinder.click(signInButton);
-        boolean i =ActionsFinder.isDisplayed(this.errorMessage);
-
-    }
-
-    public void loginWithValidCredentials(String email, String password) throws InterruptedException {
+    public void logIn(String email, String password) {
         ActionsFinder.sendKeys(this.email, email);
         ActionsFinder.sendKeys(this.password, password);
         ActionsFinder.click(signInButton);
     }
 
-    public void logIn(String email , String password) {
-        ActionsFinder.sendKeys(this.email, email);
-        ActionsFinder.sendKeys(this.password, password);
+    public void logIn() {
+        ActionsFinder.sendKeys(this.email, testingEmail);
+        ActionsFinder.sendKeys(this.password, testingPassword);
         ActionsFinder.click(signInButton);
-        ActionsFinder.waitTitleToBe(HOME_PAGE, wait);
     }
 
-
-    public WebElement getEmail() {
-        return this.email;
+    public void clickSignInButton() {
+        ActionsFinder.click(this.signInButton);
     }
 
-    public WebElement getPassword() {
-        return this.password;
-    }
-
-    public WebElement getSignInButton() {
-        return this.signInButton;
-    }
-
-    public WebElement getErrorMessage() {
-        return this.errorMessage;
-    }
-
-    public void setTestingEmail(String testingEmail) {
-        this.testingEmail = testingEmail;
-    }
-
-    public void setTestingPassword(String testingPassword) {
-        this.testingPassword = testingPassword;
-    }
 
 }

@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 
 import static com.exalt.infra.utils.Constants.*;
 
+@Test(dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
 public class ChangePasswordTest {
     private WebDriver webDriver;
     final String WEB_DRIVER_URL = "https://demo.productionready.io/#/login";
@@ -36,7 +37,6 @@ public class ChangePasswordTest {
         conduitUserSettingsPage = new ConduitUserSettingsPage(webDriver);
         conduitProfilePage = new ConduitProfilePage(webDriver);
         wait = new WebDriverWait(webDriver, 5);
-        //conduitLoginPage.logIn();
     }
 
     @AfterMethod
@@ -44,31 +44,29 @@ public class ChangePasswordTest {
         webDriver.quit();
     }
 
-    @Test(enabled = false, dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
-    void ch_OldPassToInvalidPasswordTest(String email, String newPassword, String errorMessage) throws InterruptedException {
-        conduitHomePage.getSettingsLink();
+    public void ch_OldPassToInvalidPasswordTest(String email, String newPassword, String errorMessage) throws InterruptedException {
+        conduitLoginPage.logIn();
+        ActionsFinder.waitTitleToBe(HOME_PAGE, wait);
+        conduitHomePage.clickSettingsLink();
         conduitUserSettingsPage.changeOldPasswordToInvalidPassword(newPassword);
         ActionsFinder.assertTrue(webDriver.getTitle().equals(SETTINGS_PAGE));
-        ActionsFinder.assertEquals(conduitUserSettingsPage.getErrorMessage().getText(), errorMessage);
+        ActionsFinder.assertEquals(ActionsFinder.getText(conduitUserSettingsPage.errorMessage), errorMessage);
         conduitUserSettingsPage.clickHereToLogoutButton();
         conduitHomePage.clickSignInLink();
-        conduitLoginPage.loginWithInvalidCredentials(email, newPassword, testingErrorMessage);
+        conduitLoginPage.logIn(email, newPassword);
         ActionsFinder.assertTrue(webDriver.getTitle().equals(SIGN_IN_PAGE));
-        ActionsFinder.assertEquals(conduitLoginPage.getErrorMessage().getText(), testingErrorMessage);
     }
 
-    @Test(enabled = false, dataProvider = "Excel", dataProviderClass = DataProviderFinder.class)
-    void ch_OldPassToValidPasswordTest(String email, String oldPassword, String newPassword) throws InterruptedException {
-        conduitLoginPage.logIn(email,oldPassword);
-        conduitHomePage.getSettingsLink();
+    public void ch_OldPassToValidPasswordTest(String email, String oldPassword, String newPassword) throws InterruptedException {
+        conduitLoginPage.logIn(email, oldPassword);
+        ActionsFinder.waitTitleToBe(HOME_PAGE, wait);
+        conduitHomePage.clickSettingsLink();
         conduitUserSettingsPage.changeOldPasswordToValidPassword(newPassword);
-        ActionsFinder.waitTitleToBe("@" + ActionsFinder.getText(conduitUserSettingsPage.getUserProfileLink()) + " — Conduit", wait);
+        ActionsFinder.waitTitleToBe("@" + ActionsFinder.getText(conduitUserSettingsPage.userProfileLink) + " — Conduit", wait);
         conduitProfilePage.clickSettingsLink();
         conduitUserSettingsPage.clickHereToLogoutButton();
         conduitHomePage.clickSignInLink();
-        conduitLoginPage.loginWithValidCredentials(email, newPassword);
+        conduitLoginPage.logIn(email, newPassword);
         ActionsFinder.waitTitleToBe(HOME_PAGE, wait);
-      //conduitLoginPage.setTestingPassword(newPassword);
-
     }
 }

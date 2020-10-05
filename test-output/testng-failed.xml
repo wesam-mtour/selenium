@@ -4,16 +4,16 @@
   <listeners>
     <listener class-name="com.exalt.report.listeners.ReporterListener"/>
   </listeners>
-  <test thread-count="5" name="LoginTest(failed)">
+  <test thread-count="5" name="ArticleTest(failed)">
     <parameter name="browser" value="Chrome"/>
     <classes>
-      <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest">
+      <class name="com.exalt.tests.conduittests.home.GlobalTest">
         <methods>
           <include name="setup"/>
           <include name="tearDown"/>
-          <include name="ch_OldPassToValidPasswordTest" invocation-numbers="1 2"/>
+          <include name="ConduitLikeTest"/>
         </methods>
-      </class> <!-- com.exalt.tests.conduittests.settings.ChangePasswordTest -->
+      </class> <!-- com.exalt.tests.conduittests.home.GlobalTest -->
     </classes>
-  </test> <!-- LoginTest(failed) -->
+  </test> <!-- ArticleTest(failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->
