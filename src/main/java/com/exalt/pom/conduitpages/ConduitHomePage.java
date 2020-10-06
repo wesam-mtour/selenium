@@ -1,6 +1,6 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +19,7 @@ public class ConduitHomePage {
     public WebElement settingsLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    public WebElement userProfileLink;
+    public WebElement profileLink;
 
     @FindBy(how = How.LINK_TEXT, using = "Sign in")
     public WebElement signInLink;
@@ -38,23 +38,23 @@ public class ConduitHomePage {
     }
 
     public void clickNewArticleLink() {
-        ActionsFinder.click(newArticleLink);
+        Actionsf.click(newArticleLink);
     }
 
     public void clickSettingsLink() {
-        ActionsFinder.click(settingsLink);
+        Actionsf.click(settingsLink);
     }
 
 
-    public void clickUserProfileLink() {
-        ActionsFinder.click(userProfileLink);
+    public void clickProfileLink() {
+        Actionsf.click(profileLink);
     }
 
     public void clickGlobalFeedLink() {
-        ActionsFinder.click(globalFeedLink);
+        Actionsf.click(globalFeedLink);
     }
 
     public void clickSignInLink() {
-        ActionsFinder.click(signInLink);
+        Actionsf.click(signInLink);
     }
 }

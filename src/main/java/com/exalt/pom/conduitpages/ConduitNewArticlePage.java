@@ -1,15 +1,11 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static com.exalt.infra.utils.Constants.EDITOR_PAGE;
 
 public class ConduitNewArticlePage {
     private WebDriver webDriver;
@@ -53,24 +49,24 @@ public class ConduitNewArticlePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void postNewArticle(String title, String articleAbout, String body, String enterTags) throws InterruptedException {
-        ActionsFinder.sendKeys(this.title, title);
-        ActionsFinder.sendKeys(this.articleAbout, articleAbout);
-        ActionsFinder.sendKeys(this.body, body);
-        ActionsFinder.sendKeys(this.enterTags, enterTags);
-        ActionsFinder.click(publishArticleButton);
+    public void postNewArticle(String title, String articleAbout, String body, String enterTags)  {
+        Actionsf.sendKeys(this.title, title);
+        Actionsf.sendKeys(this.articleAbout, articleAbout);
+        Actionsf.sendKeys(this.body, body);
+        Actionsf.sendKeys(this.enterTags, enterTags);
+        Actionsf.click(publishArticleButton);
     }
 
     public void clickHomeLink() {
-        ActionsFinder.click(this.homeLink);
+        Actionsf.click(this.homeLink);
     }
 
     public void clickSettingsLink() {
-        ActionsFinder.click(this.settingsLink);
+        Actionsf.click(this.settingsLink);
     }
 
     public void clickUserProfileLink() {
-        ActionsFinder.click(this.userProfileLink);
+        Actionsf.click(this.userProfileLink);
     }
 
 

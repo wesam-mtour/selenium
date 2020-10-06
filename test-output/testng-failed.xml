@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [All Test Suite]">
+  <parameter name="browser" value="Chrome"/>
   <listeners>
     <listener class-name="com.exalt.report.listeners.ReporterListener"/>
   </listeners>
-  <test thread-count="5" name="ArticleTest(failed)">
-    <parameter name="browser" value="Chrome"/>
+  <test thread-count="5" name="ChangePasswordTest(failed)">
     <classes>
-      <class name="com.exalt.tests.conduittests.home.GlobalTest">
+      <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest">
         <methods>
+          <include name="afterMethod"/>
           <include name="setup"/>
           <include name="tearDown"/>
-          <include name="ConduitLikeTest"/>
+          <include name="ch_OldPassToValidPasswordTest"/>
         </methods>
-      </class> <!-- com.exalt.tests.conduittests.home.GlobalTest -->
+      </class> <!-- com.exalt.tests.conduittests.settings.ChangePasswordTest -->
     </classes>
-  </test> <!-- ArticleTest(failed) -->
+  </test> <!-- ChangePasswordTest(failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->

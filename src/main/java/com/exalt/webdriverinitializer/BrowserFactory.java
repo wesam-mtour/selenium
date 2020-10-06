@@ -20,6 +20,7 @@ public class BrowserFactory {
 
     public static WebDriver startWebDriver(@NotNull String browserName) throws Exception {
 
+
         switch (browserName.toLowerCase()) {
             /*
              Check if parameter passed from TestNG is 'chrome'
@@ -61,6 +62,7 @@ public class BrowserFactory {
                 System.out.println("Browser not Found ");
         }
         setWaitInstance();
+
         return webDriver;
     }
 
@@ -76,7 +78,7 @@ public class BrowserFactory {
         return wait;
     }
 
-    private static void setWaitInstance() {
+    public static void setWaitInstance() {
         wait = new WebDriverWait(webDriver, TIME_OUT);
     }
 }

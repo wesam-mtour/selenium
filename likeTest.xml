@@ -5,9 +5,9 @@
         <listener class-name="com.exalt.report.listeners.ReporterListener"/>
     </listeners>
     <parameter name="browser" value="Chrome"></parameter>
-    <test name="LoginTest">
+    <test name="ChangePasswordTest">
         <classes>
-            <class name="com.exalt.tests.conduittests.login.LoginTest"></class>
+            <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest"></class>
         </classes>
     </test>
 </suite>

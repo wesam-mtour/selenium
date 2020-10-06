@@ -1,25 +1,13 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
-import org.omg.PortableInterceptor.ACTIVE;
-import org.openqa.selenium.TimeoutException;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-
-import static com.exalt.infra.utils.Constants.HOME_PAGE;
-import static com.exalt.infra.utils.Constants.SIGN_IN_PAGE;
 
 public class ConduitLoginPage {
     private WebDriver webDriver;
@@ -32,9 +20,6 @@ public class ConduitLoginPage {
 
     @FindBy(how = How.CSS, using = "input[type=\"email\"]")
     public WebElement email;
-
-    @FindBy(how = How.XPATH, using = "/html/head/title")
-    public WebElement titlee;
 
     @FindBy(how = How.CSS, using = "input[type=\"password\"]")
     public WebElement password;
@@ -55,19 +40,19 @@ public class ConduitLoginPage {
     }
 
     public void logIn(String email, String password) {
-        ActionsFinder.sendKeys(this.email, email);
-        ActionsFinder.sendKeys(this.password, password);
-        ActionsFinder.click(signInButton);
+        Actionsf.sendKeys(this.email, email);
+        Actionsf.sendKeys(this.password, password);
+        Actionsf.click(signInButton);
     }
 
     public void logIn() {
-        ActionsFinder.sendKeys(this.email, testingEmail);
-        ActionsFinder.sendKeys(this.password, testingPassword);
-        ActionsFinder.click(signInButton);
+        Actionsf.sendKeys(this.email, testingEmail);
+        Actionsf.sendKeys(this.password, testingPassword);
+        Actionsf.click(signInButton);
     }
 
     public void clickSignInButton() {
-        ActionsFinder.click(this.signInButton);
+        Actionsf.click(this.signInButton);
     }
 
 

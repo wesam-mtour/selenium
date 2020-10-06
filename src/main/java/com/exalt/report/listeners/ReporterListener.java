@@ -1,6 +1,6 @@
 package com.exalt.report.listeners;
 
-import com.exalt.infra.dataprovider.DataProviderFinder;
+import com.exalt.infra.dataprovider.ExcelDataProvider;
 import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
@@ -155,15 +155,15 @@ public class ReporterListener implements IReporter {
 //                    String methodName = "getExcelData";
 //                    Method getNameMethod = instance.getClass().getMethod(methodName);
 //                    excelData = (Map<Integer, ArrayList<String>>) getNameMethod.invoke(instance);
-                    for (int i = 0; i < DataProviderFinder.excelData.size(); ++i) {
-                        if (DataProviderFinder.excelData.get(i).get(3).equals("pass")) {
+                    for (int i = 0; i < ExcelDataProvider.excelData.size(); ++i) {
+                        if (ExcelDataProvider.excelData.get(i).get(3).equals("pass")) {
                             PassedTestsReport.concat(
                                     "</tr>" +
                                             "<tr>" +
                                             "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + DataProviderFinder.excelData.get(i).get(2) + "</td>" +
-                                            "<td>" + DataProviderFinder.excelData.get(i).get(1) + " </td>" +
+                                            "<td>" + ExcelDataProvider.excelData.get(i).get(2) + "</td>" +
+                                            "<td>" + ExcelDataProvider.excelData.get(i).get(1) + " </td>" +
                                             "</tr>");
                         }
                     }
@@ -211,11 +211,11 @@ public class ReporterListener implements IReporter {
                                     "<tr>" +
                                             "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
                                             "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + DataProviderFinder.excelData.get(index).get(2) + "</td>" +
-                                            "<td>" + DataProviderFinder.excelData.get(index).get(1) + " </td>" +
+                                            "<td>" + ExcelDataProvider.excelData.get(index).get(2) + "</td>" +
+                                            "<td>" + ExcelDataProvider.excelData.get(index).get(1) + " </td>" +
                                             "<td>" + testResult.getThrowable().getMessage()+ " </td>" +
                                             "</tr>");
-                        DataProviderFinder.excelData.get(index).set(3, "failed");
+                        ExcelDataProvider.excelData.get(index).set(3, "failed");
 
                     }
 

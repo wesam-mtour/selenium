@@ -4,16 +4,14 @@ import com.exalt.webdriverinitializer.BrowserFactory;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-
-public final class ActionsFinder<T> {
+public class Actionsf {
 
     private static WebDriver webDriver = BrowserFactory.getWebDriver();
-    private static WebDriverWait wait = BrowserFactory. getWaitInstance();
+    public static WebDriverWait wait = BrowserFactory.getWaitInstance();
 
     public static void click(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
@@ -22,7 +20,7 @@ public final class ActionsFinder<T> {
     }
 
     public static void clear(@NotNull WebElement webElement) {
-        //wait.until(ExpectedConditions.elementToBeClickable(webElement));
+        wait.until(ExpectedConditions.elementToBeClickable(webElement));
         webElement.clear();
     }
 
@@ -34,6 +32,7 @@ public final class ActionsFinder<T> {
     public static void isNotDisplayed(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.invisibilityOf(webElement));
     }
+
     public static boolean isSelected(@NotNull WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeSelected(webElement));
         return webElement.isSelected();
@@ -60,7 +59,7 @@ public final class ActionsFinder<T> {
      */
     public static void doubleClick(WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
-        Actions actions = new Actions(webDriver);
+        org.openqa.selenium.interactions.Actions actions = new org.openqa.selenium.interactions.Actions(webDriver);
         actions.doubleClick(webElement).perform();
     }
 
@@ -69,7 +68,7 @@ public final class ActionsFinder<T> {
      */
     public static void moveToElement(WebElement webElement) {
         wait.until(ExpectedConditions.visibilityOf(webElement));
-        Actions actions = new Actions(webDriver);
+        org.openqa.selenium.interactions.Actions actions = new org.openqa.selenium.interactions.Actions(webDriver);
         actions.moveToElement(webElement).perform();
     }
 
@@ -78,7 +77,7 @@ public final class ActionsFinder<T> {
      */
     public static void contextClick(WebElement webElement) {
         wait.until(ExpectedConditions.elementToBeClickable(webElement));
-        Actions actions = new Actions(webDriver);
+        org.openqa.selenium.interactions.Actions actions = new org.openqa.selenium.interactions.Actions(webDriver);
         actions.contextClick(webElement);
     }
 
@@ -120,9 +119,14 @@ public final class ActionsFinder<T> {
     }
 
     public static void waitTitleToBe(String expectedTitle, @NotNull WebDriverWait wait1) {
+        wait1.toString();
         wait1.until(ExpectedConditions.titleIs(expectedTitle));
     }
+
     public static void waitTitleToBe(String expectedTitle) {
+        wait.toString();
         wait.until(ExpectedConditions.titleIs(expectedTitle));
+//        return webDriver.getTitle();
     }
+
 }

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class DataProviderFinder<T> {
+public final class ExcelDataProvider {
 
     public static Map<Integer, ArrayList<String>> excelData = new HashMap<Integer, ArrayList<String>>();
 

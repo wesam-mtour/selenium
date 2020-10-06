@@ -1,6 +1,6 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,6 +33,9 @@ public class ConduitProfilePage {
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.article({ slug: $ctrl.article.slug })\"]")
     public WebElement articlePreview;
 
+    @FindBy(how = How.XPATH, using = "/html/body/div/div/div/div[2]/div/div/div[2]/article-list/article-preview[1]/div/a/h1")
+    public WebElement articleTitle;
+
     public ConduitProfilePage(WebDriver webDriver) {
         this.webDriver = webDriver;
         /*
@@ -42,23 +45,23 @@ public class ConduitProfilePage {
     }
 
     public void clickHomeLink() {
-        ActionsFinder.click(this.homeLink);
+        Actionsf.click(this.homeLink);
     }
 
     public void clickNewArticleLink() {
-        ActionsFinder.click(this.newArticleLink);
+        Actionsf.click(this.newArticleLink);
     }
 
     public void clickSettingsLink() {
-        ActionsFinder.click(this.settingsLink);
+        Actionsf.click(this.settingsLink);
     }
 
     public void clickArticlePreview() {
-        ActionsFinder.click(articlePreview);
+        Actionsf.click(articlePreview);
     }
 
     public void clickEditProfileSettingsButton() {
-        ActionsFinder.click(editProfileSettingsButton);
+        Actionsf.click(editProfileSettingsButton);
     }
 
 }

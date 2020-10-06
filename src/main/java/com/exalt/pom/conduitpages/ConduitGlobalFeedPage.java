@@ -1,6 +1,6 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,14 +43,14 @@ public class ConduitGlobalFeedPage {
     }
 
     public void clickNewArticleLink() {
-        ActionsFinder.click(newArticleLink);
+        Actionsf.click(newArticleLink);
     }
 
     public void clickUserProfileLink() {
-        ActionsFinder.click(userProfileLink);
+        Actionsf.click(userProfileLink);
     }
 
     public void clickLikeButton() {
-        ActionsFinder.click(likeButton);
+        Actionsf.click(likeButton);
     }
 }

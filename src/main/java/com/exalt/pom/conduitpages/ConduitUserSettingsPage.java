@@ -1,14 +1,11 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static com.exalt.infra.utils.Constants.*;
 
 public class ConduitUserSettingsPage {
     private WebDriver webDriver;
@@ -58,35 +55,35 @@ public class ConduitUserSettingsPage {
     }
 
     public void changeOldPasswordToInvalidPassword(String newPassword) {
-        ActionsFinder.sendKeys(this.password, newPassword);
-        ActionsFinder.click(updateSettingsButton);
-        ActionsFinder.isDisplayed(this.errorMessage);
+        Actionsf.sendKeys(this.password, newPassword);
+        Actionsf.click(updateSettingsButton);
+        Actionsf.isDisplayed(this.errorMessage);
     }
 
     public void changeOldPasswordToValidPassword(String newPassword) {
-        ActionsFinder.sendKeys(this.password, newPassword);
-        ActionsFinder.click(updateSettingsButton);
+        Actionsf.sendKeys(this.password, newPassword);
+        Actionsf.click(updateSettingsButton);
     }
 
 
     public void clickHomeLink() {
-        ActionsFinder.click(this.homeLink);
+        Actionsf.click(this.homeLink);
     }
 
     public void clickNewArticleLink() {
-        ActionsFinder.click(this.newArticleLink);
+        Actionsf.click(this.newArticleLink);
     }
 
     public void clickUserProfileLink() {
-        ActionsFinder.click(this.userProfileLink);
+        Actionsf.click(this.userProfileLink);
     }
 
     public void clickUpdateSettingsButton() {
-        ActionsFinder.click(this.updateSettingsButton);
+        Actionsf.click(this.updateSettingsButton);
     }
 
     public void clickHereToLogoutButton() {
-        ActionsFinder.click(this.orClickHereToLogoutButton);
+        Actionsf.click(this.orClickHereToLogoutButton);
     }
 
 

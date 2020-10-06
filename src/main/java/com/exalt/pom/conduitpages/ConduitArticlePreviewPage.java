@@ -1,14 +1,11 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.ActionsFinder;
+import com.exalt.infra.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static com.exalt.infra.utils.Constants.HOME_PAGE;
 
 public class ConduitArticlePreviewPage {
     private WebDriver webDriver;
@@ -43,37 +40,32 @@ public class ConduitArticlePreviewPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void deleteArticle() throws InterruptedException {
-        ActionsFinder.click(deleteArticleButton);
-    }
-
-
     public void clickHomeLink() {
-        ActionsFinder.click(this.homeLink);
+        Actionsf.click(this.homeLink);
     }
 
 
     public void clickNewArticleLink() {
-        ActionsFinder.click(this.newArticleLink);
+        Actionsf.click(this.newArticleLink);
     }
 
 
     public void clickSettingsLink() {
-        ActionsFinder.click(this.settingsLink);
+        Actionsf.click(this.settingsLink);
     }
 
 
     public void clickUserProfileLink() {
-        ActionsFinder.click(this.userProfileLink);
+        Actionsf.click(this.userProfileLink);
     }
 
 
     public void clickEditArticleButton() {
-        ActionsFinder.click(this.editArticleButton);
+        Actionsf.click(this.editArticleButton);
     }
 
 
     public void clickDeleteArticleButton() {
-        ActionsFinder.click(this.deleteArticleButton);
+        Actionsf.click(this.deleteArticleButton);
     }
 }
