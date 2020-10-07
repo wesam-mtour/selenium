@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class ConduitUserSettingsPage {
+public class ConduitSettingsPage {
     private WebDriver webDriver;
 
     /*
@@ -24,7 +24,7 @@ public class ConduitUserSettingsPage {
     public WebElement newArticleLink;
 
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username })\"]")
-    public WebElement userProfileLink;
+    public WebElement profileLink;
     /*
      end top navigation bar
      */
@@ -46,7 +46,7 @@ public class ConduitUserSettingsPage {
     public WebElement orClickHereToLogoutButton;
 
 
-    public ConduitUserSettingsPage(WebDriver webDriver) {
+    public ConduitSettingsPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         /*
         This initElements method will create all WebElements
@@ -54,13 +54,7 @@ public class ConduitUserSettingsPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void changeOldPasswordToInvalidPassword(String newPassword) {
-        Actionsf.sendKeys(this.password, newPassword);
-        Actionsf.click(updateSettingsButton);
-        Actionsf.isDisplayed(this.errorMessage);
-    }
-
-    public void changeOldPasswordToValidPassword(String newPassword) {
+    public void changePassword(String newPassword) {
         Actionsf.sendKeys(this.password, newPassword);
         Actionsf.click(updateSettingsButton);
     }
@@ -74,8 +68,8 @@ public class ConduitUserSettingsPage {
         Actionsf.click(this.newArticleLink);
     }
 
-    public void clickUserProfileLink() {
-        Actionsf.click(this.userProfileLink);
+    public void clickProfileLink() {
+        Actionsf.click(this.profileLink);
     }
 
     public void clickUpdateSettingsButton() {

@@ -1,77 +1,65 @@
 package com.exalt.tests.conduittests.settings;
 
 import com.exalt.infra.actions.Actionsf;
-import com.exalt.infra.dataprovider.ExcelDataProvider;
-import com.exalt.pom.conduitpages.ConduitHomePage;
-import com.exalt.pom.conduitpages.ConduitLoginPage;
-import com.exalt.pom.conduitpages.ConduitProfilePage;
-import com.exalt.pom.conduitpages.ConduitUserSettingsPage;
-import com.exalt.webdriverinitializer.BrowserFactory;
-import org.openqa.selenium.WebDriver;
+
 import org.testng.annotations.*;
 
 import static com.exalt.infra.utils.Constants.*;
 
-@Test(dataProvider = "Excel", dataProviderClass = ExcelDataProvider.class)
-public class ChangePasswordTest {
-    private WebDriver webDriver;
-    final String WEB_DRIVER_URL = "https://demo.productionready.io/#/login";
-    private ConduitLoginPage conduitLoginPage;
-    private ConduitHomePage conduitHomePage;
-    private ConduitUserSettingsPage conduitUserSettingsPage;
-    private ConduitProfilePage conduitProfilePage;
-    private String testingErrorMessage = "email or password is invalid";
+public class ChangePasswordTest extends BaseSettings {
 
-    @BeforeClass
-    @Parameters("browser")
-    public void setup(String browser) throws Exception {
-        webDriver = BrowserFactory.startWebDriver(browser);
-        conduitLoginPage = new ConduitLoginPage(webDriver);
-        conduitHomePage = new ConduitHomePage(webDriver);
-        conduitUserSettingsPage = new ConduitUserSettingsPage(webDriver);
-        conduitProfilePage = new ConduitProfilePage(webDriver);
-        BrowserFactory.openUrl(WEB_DRIVER_URL);
-    }
 
-    @AfterMethod
-    public void afterMethod() {
+    public void ch_OldPassToInvalidPasswordTest(String email, String newPassword, String errorMessage) throws InterruptedException {
+        conduitSettingsPage.changePassword(newPassword);
+        Actionsf.assertTrue(Actionsf.isDisplayed(conduitSettingsPage.errorMessage));
+        Actionsf.assertTrue(webDriver.getTitle().equals(SETTINGS_PAGE));
+        Actionsf.assertEquals(Actionsf.getText(conduitSettingsPage.errorMessage), errorMessage);
+        /*
+         test verification
+         */
+        /*
+        there is a solution for before and after class
+         */
+        conduitSettingsPage.clickHereToLogoutButton();
+        Actionsf.waitTitleToBe(HOME_PAGE, wait);
+        conduitHomePage.clickSignInLink();
+        Actionsf.waitTitleToBe(SIGN_IN_PAGE, wait);
+        conduitLoginPage.logIn(email, newPassword);
+        Actionsf.assertTrue(Actionsf.isDisplayed(conduitLoginPage.errorMessage));
+        Actionsf.assertTrue(webDriver.getTitle().equals(SIGN_IN_PAGE));
         Actionsf.clear(conduitLoginPage.email);
         Actionsf.clear(conduitLoginPage.password);
-    }
+        /*
+        To be able to login again with the old password in the event of an error in one of the previous tests
+         */
+        conduitLoginPage.logIn();
+        Actionsf.waitTitleToBe(HOME_PAGE, wait);
 
-    @AfterClass
-    void tearDown() {
-        webDriver.quit();
+
     }
 
     @Test(enabled = false)
-    public void ch_OldPassToInvalidPasswordTest(String email, String newPassword, String errorMessage) throws InterruptedException {
-        conduitLoginPage.logIn();
-        Actionsf.waitTitleToBe(HOME_PAGE);
-        conduitHomePage.clickSettingsLink();
-        conduitUserSettingsPage.changeOldPasswordToInvalidPassword(newPassword);
-        Actionsf.assertTrue(webDriver.getTitle().equals(SETTINGS_PAGE));
-        Actionsf.assertEquals(Actionsf.getText(conduitUserSettingsPage.errorMessage), errorMessage);
-        conduitUserSettingsPage.clickHereToLogoutButton();
-        conduitHomePage.clickSignInLink();
-        conduitLoginPage.logIn(email, newPassword);
-        Actionsf.assertTrue(webDriver.getTitle().equals(SIGN_IN_PAGE));
-    }
 
+    public void ch_OldPassToValidPasswordTest(String email, String newPassword) {
 
-    public void ch_OldPassToValidPasswordTest(String email, String oldPassword, String newPassword) throws InterruptedException {
-        conduitLoginPage.logIn(email, oldPassword);
-        Actionsf.waitTitleToBe(HOME_PAGE);
-        conduitHomePage.clickSettingsLink();
-        conduitUserSettingsPage.changeOldPasswordToValidPassword(newPassword);
-        Actionsf.waitTitleToBe("@" + Actionsf.getText(conduitUserSettingsPage.userProfileLink) + " — Conduit");
+        conduitSettingsPage.changePassword(newPassword);
+        Actionsf.waitTitleToBe(USER_PAGE, wait);
+        /*
+         test verification
+         */
         conduitProfilePage.clickSettingsLink();
-        conduitUserSettingsPage.clickHereToLogoutButton();
+        conduitSettingsPage.clickHereToLogoutButton();
         conduitHomePage.clickSignInLink();
         conduitLoginPage.logIn(email, newPassword);
-        Actionsf.waitTitleToBe(HOME_PAGE);
+        Actionsf.waitTitleToBe(HOME_PAGE, wait);
+        /*
+        To be able to log in again with the old password in the event of an error in one of the previous tests
+         */
         conduitHomePage.clickSettingsLink();
-        conduitUserSettingsPage.clickHereToLogoutButton();
-        conduitHomePage.clickSignInLink();
+        conduitSettingsPage.changePassword("123456789");
+        conduitSettingsPage.clickHereToLogoutButton();
+        Actionsf.waitTitleToBe(HOME_PAGE, wait);
     }
+
+
 }

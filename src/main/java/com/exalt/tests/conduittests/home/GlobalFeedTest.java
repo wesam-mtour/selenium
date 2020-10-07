@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
 @Test
-public class GlobalTest {
+public class GlobalFeedTest {
 
     private WebDriver webDriver;
     final String WEB_DRIVER_URL = "https://demo.productionready.io/#/login";
@@ -40,6 +40,5 @@ public class GlobalTest {
         conduitGlobalFeedPage.clickLikeButton();
         newValue = Actionsf.getText(conduitGlobalFeedPage.numberOfLikes, String.valueOf(Integer.valueOf(oldValue)));
         Actionsf.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue)));
-
     }
 }

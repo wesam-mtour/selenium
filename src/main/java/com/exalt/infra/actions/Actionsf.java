@@ -119,7 +119,6 @@ public class Actionsf {
     }
 
     public static void waitTitleToBe(String expectedTitle, @NotNull WebDriverWait wait1) {
-        wait1.toString();
         wait1.until(ExpectedConditions.titleIs(expectedTitle));
     }
 

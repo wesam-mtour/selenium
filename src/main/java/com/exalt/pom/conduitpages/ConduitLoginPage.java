@@ -9,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static com.exalt.infra.utils.Constants.HOME_PAGE;
+
 public class ConduitLoginPage {
     private WebDriver webDriver;
     private WebDriverWait wait;

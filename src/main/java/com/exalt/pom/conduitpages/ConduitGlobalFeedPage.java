@@ -25,6 +25,9 @@ public class ConduitGlobalFeedPage {
     /*
      end top navigation bar
      */
+    @FindBy(how = How.CSS, using = "h1[ng-bind=\"$ctrl.article.title\"]")
+    public WebElement articleTitle;
+
     @FindBy(how = How.CSS, using = "favorite-btn[article=\"$ctrl.article\"]")
     public WebElement likeButton;
 
@@ -33,6 +36,7 @@ public class ConduitGlobalFeedPage {
 
     @FindBy(how = How.TAG_NAME, using = "favorite-btn")
     public List<WebElement> allLinks;
+
 
     public ConduitGlobalFeedPage(WebDriver webDriver) {
         this.webDriver = webDriver;

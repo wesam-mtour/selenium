@@ -7,7 +7,7 @@
     <test name="ArticleTest">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.exalt.tests.conduittests.article.ArticleTest"></class>
+            <class name="com.exalt.tests.conduittests.article.PostArticleTest"></class>
         </classes>
     </test>
 </suite>

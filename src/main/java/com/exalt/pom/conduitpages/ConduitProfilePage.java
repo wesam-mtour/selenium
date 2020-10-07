@@ -33,8 +33,11 @@ public class ConduitProfilePage {
     @FindBy(how = How.CSS, using = "a[ui-sref=\"app.article({ slug: $ctrl.article.slug })\"]")
     public WebElement articlePreview;
 
-    @FindBy(how = How.XPATH, using = "/html/body/div/div/div/div[2]/div/div/div[2]/article-list/article-preview[1]/div/a/h1")
+    @FindBy(how = How.CSS, using = "h1[ng-bind=\"$ctrl.article.title\"]")
     public WebElement articleTitle;
+
+//    @FindBy(how = How.XPATH, using = "/html/body/div/div/div/div[2]/div/div/div[2]/article-list/article-preview[1]/div/a/h1")
+//    public WebElement articleTitle;
 
     public ConduitProfilePage(WebDriver webDriver) {
         this.webDriver = webDriver;

@@ -7,7 +7,7 @@
     <parameter name="browser" value="Chrome"></parameter>
     <test name="ChangePasswordTest">
         <classes>
-            <class name="com.exalt.tests.conduittests.home.GlobalTest"></class>
+            <class name="com.exalt.tests.conduittests.home.GlobalFeedTest"></class>
         </classes>
     </test>
 </suite>
