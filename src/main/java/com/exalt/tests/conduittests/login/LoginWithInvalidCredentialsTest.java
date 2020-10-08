@@ -25,6 +25,9 @@ public class LoginWithInvalidCredentialsTest extends BaseLogin {
     }
 
     public void loginWithInvalidCredentialsTest(String email, String password, String expectedErrorMessage) throws InterruptedException {
+//       if (password.equals("1234567")){
+//           throw new SkipException("sdfdsf");
+//       }
         conduitLoginPage.logIn(email, password);
         /*
          test verification

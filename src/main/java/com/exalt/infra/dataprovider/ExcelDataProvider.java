@@ -37,11 +37,19 @@ public final class ExcelDataProvider {
          */
         Sheet sheet = workbook.getSheet(method.getName());
         /*
-         Or you can use a for-each loop to iterate over the rows and columns
+          for-each loop to iterate over the rows that have "run" equal to yes
          */
+        int numberOfRowsInSheet = 0;
+        for (int i = 0; i < sheet.getLastRowNum() + 1; ++i) {
+            if (dataFormatter.formatCellValue(sheet.getRow(i).getCell(0)).equals("yes")) {
+                numberOfRowsInSheet++;
+            }
+        }
         int numberOfColumnsInSheet = sheet.getRow(0).getLastCellNum();
-        int numberOfRowsInSheet = sheet.getLastRowNum();
         Object[][] data = new Object[numberOfRowsInSheet][numberOfColumnsInSheet - 3];
+        /*
+        i started from 1 to ignore the first row in the sheet
+         */
         for (int i = 1; i <= sheet.getLastRowNum(); ++i) {
             row = sheet.getRow(i);
             excelData.put(i - 1, new ArrayList<String>(Arrays.asList(
@@ -53,8 +61,7 @@ public final class ExcelDataProvider {
                 for (int j = 0; j < numberOfColumnsInSheet - 3; ++j) {
                     data[i - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 3));
                 }
-            }
-            else{
+            } else {
 
             }
         }
