@@ -55,6 +55,7 @@ public class ConduitSettingsPage {
     }
 
     public void changePassword(String newPassword) {
+        Actionsf.clear(this.password);
         Actionsf.sendKeys(this.password, newPassword);
         Actionsf.click(updateSettingsButton);
     }

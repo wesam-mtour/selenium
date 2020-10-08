@@ -35,9 +35,15 @@ public class GlobalFeedTest {
         conduitHomePage.clickGlobalFeedLink();
         String oldValue = Actionsf.getText(conduitGlobalFeedPage.numberOfLikes);
         conduitGlobalFeedPage.clickLikeButton();
+        /*
+         test verification, number of like must be increased by 1 after doing like
+         */
         String newValue = Actionsf.getText(conduitGlobalFeedPage.numberOfLikes, String.valueOf(Integer.valueOf(oldValue) + 1));
         Actionsf.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue) + 1));
         conduitGlobalFeedPage.clickLikeButton();
+        /*
+         test verification, number of like must be decreased by 1, after doing unlike
+         */
         newValue = Actionsf.getText(conduitGlobalFeedPage.numberOfLikes, String.valueOf(Integer.valueOf(oldValue)));
         Actionsf.assertEquals(Integer.valueOf(newValue), (Integer.valueOf(oldValue)));
     }

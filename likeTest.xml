@@ -7,7 +7,7 @@
     <parameter name="browser" value="Chrome"></parameter>
     <test name="ChangePasswordTest">
         <classes>
-            <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest"></class>
+            <class name="com.exalt.tests.conduittests.settings.ChangePassToInValidPass"></class>
         </classes>
     </test>
 </suite>

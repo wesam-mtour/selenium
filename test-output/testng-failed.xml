@@ -7,14 +7,14 @@
   </listeners>
   <test thread-count="5" name="ChangePasswordTest(failed)">
     <classes>
-      <class name="com.exalt.tests.conduittests.settings.ChangePasswordTest">
+      <class name="com.exalt.tests.conduittests.settings.ChangePassToInValidPass">
         <methods>
           <include name="afterMethod"/>
           <include name="setup"/>
           <include name="tearDown"/>
           <include name="ch_OldPassToValidPasswordTest"/>
         </methods>
-      </class> <!-- com.exalt.tests.conduittests.settings.ChangePasswordTest -->
+      </class> <!-- com.exalt.tests.conduittests.settings.ChangePassToInValidPass -->
     </classes>
   </test> <!-- ChangePasswordTest(failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->

@@ -42,12 +42,16 @@ public class ConduitLoginPage {
     }
 
     public void logIn(String email, String password) {
+        Actionsf.clear(this.email);
+        Actionsf.clear(this.password);
         Actionsf.sendKeys(this.email, email);
         Actionsf.sendKeys(this.password, password);
         Actionsf.click(signInButton);
     }
 
     public void logIn() {
+        Actionsf.clear(this.email);
+        Actionsf.clear(this.password);
         Actionsf.sendKeys(this.email, testingEmail);
         Actionsf.sendKeys(this.password, testingPassword);
         Actionsf.click(signInButton);

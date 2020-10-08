@@ -54,6 +54,9 @@ public final class ExcelDataProvider {
                     data[i - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 3));
                 }
             }
+            else{
+
+            }
         }
         /*
          Closing the workbook

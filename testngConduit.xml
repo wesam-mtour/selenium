@@ -6,8 +6,13 @@
     </listeners>
     <parameter name="browser" value="Chrome"></parameter>
     <test name="LoginTest">
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="111"/>-->
+<!--            </run>-->
+<!--        </groups>-->
         <classes>
-            <class name="com.exalt.tests.conduittests.login.LoginTest"></class>
+            <class name="com.exalt.tests.conduittests.login.LoginWithInvalidCredentialsTest"></class>
         </classes>
     </test>
 </suite>

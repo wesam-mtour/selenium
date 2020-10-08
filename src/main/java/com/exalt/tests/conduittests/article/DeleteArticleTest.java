@@ -2,10 +2,10 @@ package com.exalt.tests.conduittests.article;
 
 import com.exalt.infra.actions.Actionsf;
 import org.testng.annotations.*;
+
 import static com.exalt.infra.utils.Constants.*;
 
-@Test
-public class ArticleTest extends BaseArticle {
+public class DeleteArticleTest extends BaseArticle {
 
     private String title = "this title created for testing";
     private String articleAbout = "this description created for testing";
@@ -14,15 +14,18 @@ public class ArticleTest extends BaseArticle {
 
     @BeforeMethod
     public void beforeMethod() {
+        super.beforeMethod();
         conduitHomePage.clickNewArticleLink();
         Actionsf.waitTitleToBe(EDITOR_PAGE);
         conduitNewArticlePage.postNewArticle(title, articleAbout, body, endTag);
     }
 
-    @Test(enabled = true)
     public void deleteArticleTest() {
         conduitArticlePreviewPage.clickDeleteArticleButton();
         Actionsf.waitTitleToBe(HOME_PAGE);
+        /*
+         test verification, The article must published in both Profile page and global feed page
+         */
         conduitHomePage.clickProfileLink();
         Actionsf.waitTitleToBe(USER_PAGE);
         Actionsf.assertNotEquals(Actionsf.getText(conduitProfilePage.articleTitle), title);
