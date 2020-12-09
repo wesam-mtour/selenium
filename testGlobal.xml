@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite>
 <suite name="All Test Suite">
     <listeners>
         <listener class-name="com.exalt.report.listeners.ReporterListener"/>
     </listeners>
-    <test name="ArticleTest">
-        <parameter name="browser" value="Chrome"></parameter>
+    <parameter name="browser" value="Chrome"></parameter>
+    <test name="GlobalFeedTest">
+
         <classes>
-            <class name="com.exalt.tests.conduittests.article.PostArticleTest"></class>
+            <!--            <class name="com.exalt.tests.conduittests.home.GlobalFeedTest"></class>-->
+            <!--            <class name="com.exalt.tests.conduittests.article.DeleteArticleTest"></class>-->
+
+<!--            <class name="com.exalt.tests.conduittests.login.LoginWithValidCredentialsTest"></class>-->
+            <class name="com.exalt.tests.UItest.conduittests.login.LoginWithInvalidCredentialsTest"></class>
         </classes>
     </test>
+
+
 </suite>

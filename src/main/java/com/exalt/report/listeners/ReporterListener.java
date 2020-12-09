@@ -158,6 +158,7 @@ public class ReporterListener implements IReporter {
     }
 
     private void writeFailedTestReport(@NotNull ITestContext tc) {
+        int errorIndex = 0;
         Map<String, String> map = new HashMap<String, String>();
         FailedTestsReport.concat(
                 "<h2>Suite:" + tc.getName() + "</h2>" +
@@ -180,11 +181,12 @@ public class ReporterListener implements IReporter {
                                         "<td>" + testResult.getName() + "</td>" +
                                         "<td>" + ExcelDataProvider.excelData.get(index).get(2) + "</td>" +
                                         "<td>" + ExcelDataProvider.excelData.get(index).get(1) + " </td>" +
-                                        "<td>" + testResult.getThrowable().getMessage() + " </td>" +
+                                        "<td>" + ((ITestResult) tc.getFailedTests().getAllResults().toArray()[errorIndex]).getThrowable() + " </td>" +
                                         "</tr>");
                         ExcelDataProvider.excelData.get(index).set(3, "failed");
-
+                        errorIndex++;
                     }
+                    errorIndex = 0;
 
                 } else {
                     FailedTestsReport.concat(
@@ -201,7 +203,6 @@ public class ReporterListener implements IReporter {
             }
         }
         FailedTestsReport.concat("</table>");
-
     }
 
     private void writeSummaryReport() {

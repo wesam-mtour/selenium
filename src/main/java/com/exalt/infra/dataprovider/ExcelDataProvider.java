@@ -50,19 +50,19 @@ public final class ExcelDataProvider {
         /*
         i started from 1 to ignore the first row in the sheet
          */
+        int index = 1;
         for (int i = 1; i <= sheet.getLastRowNum(); ++i) {
             row = sheet.getRow(i);
-            excelData.put(i - 1, new ArrayList<String>(Arrays.asList(
-                    dataFormatter.formatCellValue(row.getCell(0)),
-                    dataFormatter.formatCellValue(row.getCell(1)),
-                    dataFormatter.formatCellValue(row.getCell(2)),
-                    "pass")));
-            if (excelData.get(i - 1).get(0).equals("yes")) {
+            if ((dataFormatter.formatCellValue(row.getCell(0))).equals("yes")) {
+                excelData.put(index - 1, new ArrayList<String>(Arrays.asList(
+                        dataFormatter.formatCellValue(row.getCell(0)),
+                        dataFormatter.formatCellValue(row.getCell(1)),
+                        dataFormatter.formatCellValue(row.getCell(2)),
+                        "pass")));
                 for (int j = 0; j < numberOfColumnsInSheet - 3; ++j) {
-                    data[i - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 3));
+                    data[index - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 3));
                 }
-            } else {
-
+                index++;
             }
         }
         /*

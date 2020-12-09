@@ -1,6 +1,6 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.Actionsf;
+import com.exalt.infra.UItest.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,8 +8,6 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static com.exalt.infra.utils.Constants.HOME_PAGE;
 
 public class ConduitLoginPage {
     private WebDriver webDriver;

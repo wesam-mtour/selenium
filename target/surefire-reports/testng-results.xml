@@ -2,24 +2,60 @@
 <testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="Surefire suite" duration-ms="7845" started-at="2020-09-13T09:29:42Z" finished-at="2020-09-13T09:29:50Z">
+  <suite name="All Test Suite" duration-ms="28206" started-at="2020-10-25T10:45:14Z" finished-at="2020-10-25T10:45:42Z">
     <groups>
     </groups>
-    <test name="Surefire test" duration-ms="7845" started-at="2020-09-13T09:29:42Z" finished-at="2020-09-13T09:29:50Z">
-      <class name="com.exalt.SeleniumTest">
-        <test-method status="PASS" signature="setup()[pri:0, instance:com.exalt.SeleniumTest@380fb434]" name="setup" is-config="true" duration-ms="7771" started-at="2020-09-13T09:29:42Z" finished-at="2020-09-13T09:29:50Z">
+    <test name="selenium test by jenkins" duration-ms="28206" started-at="2020-10-25T10:45:14Z" finished-at="2020-10-25T10:45:42Z">
+      <class name="com.exalt.tests.conduittests.home.GlobalFeedTest">
+        <test-method status="PASS" signature="setup(java.lang.String)[pri:0, instance:com.exalt.tests.conduittests.home.GlobalFeedTest@3567135c]" name="setup" is-config="true" duration-ms="5226" started-at="2020-10-25T10:45:31Z" finished-at="2020-10-25T10:45:36Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Chrome]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="logoTest()[pri:0, instance:com.exalt.SeleniumTest@380fb434]" name="logoTest" duration-ms="58" started-at="2020-09-13T09:29:50Z" finished-at="2020-09-13T09:29:50Z">
+        <test-method status="PASS" signature="ConduitLikeTest()[pri:0, instance:com.exalt.tests.conduittests.home.GlobalFeedTest@3567135c]" name="ConduitLikeTest" duration-ms="4916" started-at="2020-10-25T10:45:36Z" finished-at="2020-10-25T10:45:41Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- logoTest -->
-        <test-method status="PASS" signature="titleTest()[pri:0, instance:com.exalt.SeleniumTest@380fb434]" name="titleTest" duration-ms="5" started-at="2020-09-13T09:29:50Z" finished-at="2020-09-13T09:29:50Z">
+        </test-method> <!-- ConduitLikeTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.exalt.tests.conduittests.home.GlobalFeedTest@3567135c]" name="tearDown" is-config="true" duration-ms="603" started-at="2020-10-25T10:45:41Z" finished-at="2020-10-25T10:45:42Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- titleTest -->
-      </class> <!-- com.exalt.SeleniumTest -->
-    </test> <!-- Surefire test -->
-  </suite> <!-- Surefire suite -->
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.exalt.tests.conduittests.home.GlobalFeedTest -->
+      <class name="com.exalt.tests.conduittests.article.DeleteArticleTest">
+        <test-method status="PASS" signature="setup(java.lang.String)[pri:0, instance:com.exalt.tests.conduittests.article.DeleteArticleTest@6be46e8f]" name="setup" is-config="true" duration-ms="5533" started-at="2020-10-25T10:45:14Z" finished-at="2020-10-25T10:45:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:com.exalt.tests.conduittests.article.DeleteArticleTest@6be46e8f]" name="beforeMethod" is-config="true" duration-ms="4576" started-at="2020-10-25T10:45:19Z" finished-at="2020-10-25T10:45:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="deleteArticleTest()[pri:0, instance:com.exalt.tests.conduittests.article.DeleteArticleTest@6be46e8f]" name="deleteArticleTest" duration-ms="5512" started-at="2020-10-25T10:45:24Z" finished-at="2020-10-25T10:45:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteArticleTest -->
+        <test-method status="PASS" signature="afterMethod()[pri:0, instance:com.exalt.tests.conduittests.article.DeleteArticleTest@6be46e8f]" name="afterMethod" is-config="true" duration-ms="1218" started-at="2020-10-25T10:45:29Z" finished-at="2020-10-25T10:45:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.exalt.tests.conduittests.article.DeleteArticleTest@6be46e8f]" name="tearDown" is-config="true" duration-ms="609" started-at="2020-10-25T10:45:31Z" finished-at="2020-10-25T10:45:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.exalt.tests.conduittests.article.DeleteArticleTest -->
+    </test> <!-- selenium test by jenkins -->
+  </suite> <!-- All Test Suite -->
 </testng-results>

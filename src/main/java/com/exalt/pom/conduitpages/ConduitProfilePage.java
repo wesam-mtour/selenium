@@ -1,6 +1,6 @@
 package com.exalt.pom.conduitpages;
 
-import com.exalt.infra.actions.Actionsf;
+import com.exalt.infra.UItest.actions.Actionsf;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
