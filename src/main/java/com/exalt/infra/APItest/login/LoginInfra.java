@@ -1,11 +1,15 @@
 package com.exalt.infra.APItest.login;
 
 import com.exalt.infra.APItest.RestAPIs;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import org.testng.Assert;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class LoginInfra {
     private static final String LOGIN_URL = "https://conduit.productionready.io/api/users/login";
@@ -13,16 +17,15 @@ public class LoginInfra {
     @NotNull
     public static JSONObject login(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
-        String token = "";
-        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject, token);
+        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject);
         return response;
     }
 
     @NotNull
-    public static JSONObject invalidLogin(String email, String password) throws IOException {
+    public static HttpResponse invalidLogin(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
         String token = "";
-        JSONObject response = RestAPIs.invalidPOST(LOGIN_URL, jsonObject, token);
+        HttpResponse response = RestAPIs.invalidPOST(LOGIN_URL, jsonObject, token);
         return response;
     }
 
@@ -30,10 +33,28 @@ public class LoginInfra {
     @NotNull
     public static String getToken(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
-        String token = "";
-        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject, token);
+        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject);
         String generatedToken = response.getJSONObject("user").getString("token");
         return generatedToken;
+    }
+
+    public static void verifyStatusCode(HttpResponse httpResponse, String expectedStatusCode) {
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), Integer.parseInt(expectedStatusCode));
+    }
+
+    @NotNull
+    public static JSONObject getResponseMessage(HttpResponse httpResponse) throws IOException {
+        HttpEntity entity = httpResponse.getEntity();
+        StringBuffer result = new StringBuffer();
+        if (entity != null) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+        }
+        JSONObject response = new JSONObject(result.toString());
+        return response;
     }
 
 

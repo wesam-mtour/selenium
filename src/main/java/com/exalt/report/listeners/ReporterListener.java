@@ -1,14 +1,11 @@
 package com.exalt.report.listeners;
 
-import com.exalt.infra.dataprovider.ExcelDataProvider;
 import com.exalt.report.generatedreports.*;
 import org.jetbrains.annotations.NotNull;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -76,40 +73,32 @@ public class ReporterListener implements IReporter {
                         "<tr>" +
                         "<th>Class Name</th>" +
                         "<th>Test Name</th>" +
-                        "<th>Run</th>" +
-                        "<th>Description</th>" +
-                        "<th>Test Case Number </th>" +
+                        "<th>Test Case Number</th>" +
+                        "<th>Test Description</th>" +
                         "</tr>");
         for (ITestResult testResult : tc.getSkippedTests().getAllResults()) {
-            if (!(map.containsKey(testResult.getName()))) {
-                if (testResult.getParameters().length != 0) {
-                    for (int i = 0; i < ExcelDataProvider.excelData.size(); ++i) {
-                        if (ExcelDataProvider.excelData.get(i).get(0).equals("no")) {
-                            SkippedTestsReport.concat(
-                                    "</tr>" +
-                                            "<tr>" +
-                                            "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                            "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + ExcelDataProvider.excelData.get(i).get(0) + "</td>" +
-                                            "<td>" + ExcelDataProvider.excelData.get(i).get(2) + "</td>" +
-                                            "<td>" + ExcelDataProvider.excelData.get(i).get(1) + " </td>" +
-                                            "</tr>");
-                        }
-                    }
-                } else {
-                    SkippedTestsReport.concat(
-                            "</tr>" +
-                                    "<tr>" +
-                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                    "<td>" + testResult.getName() + "</td>" +
-                                    "<td>" + "No test case currently" + " </td>" +
-                                    "<td>" + "No test case currently" + "</td>" +
-                                    "<td>" + "No test case currently" + " </td>" +
+            if (testResult.getParameters().length != 0) {
+                SkippedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + testResult.getParameters()[0].toString() + "</td>" +
+                                "<td>" + testResult.getParameters()[1].toString() + "</td>" +
+                                "</tr>");
+            } else {
+                SkippedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + "No test case currently" + " </td>" +
+                                "<td>" + "No test case currently" + "</td>" +
+                                "<td>" + "No test case currently" + " </td>" +
 
-                                    "</tr>");
-                }
-                map.put(testResult.getName(), "demoValue");
+                                "</tr>");
             }
+
         }
         SkippedTestsReport.concat("</table>");
     }
@@ -122,84 +111,66 @@ public class ReporterListener implements IReporter {
                         "<tr>" +
                         "<th>Class Name</th>" +
                         "<th>Test Name</th>" +
-                        "<th>Description</th>" +
-                        "<th>Test Case Number </th>" +
+                        "<th>Test Case Number</th>" +
+                        "<th>Test Description</th>" +
                         "</tr>");
         for (ITestResult testResult : tc.getPassedTests().getAllResults()) {
-            if (!(map.containsKey(testResult.getName()))) {
-                if (testResult.getParameters().length != 0) {
-                    for (int i = 0; i < ExcelDataProvider.excelData.size(); ++i) {
-                        if (ExcelDataProvider.excelData.get(i).get(3).equals("pass")) {
-                            PassedTestsReport.concat(
-                                    "</tr>" +
-                                            "<tr>" +
-                                            "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                            "<td>" + testResult.getName() + "</td>" +
-                                            "<td>" + ExcelDataProvider.excelData.get(i).get(2) + "</td>" +
-                                            "<td>" + ExcelDataProvider.excelData.get(i).get(1) + " </td>" +
-                                            "</tr>");
-                        }
-                    }
-                } else {
-                    PassedTestsReport.concat(
-                            "</tr>" +
-                                    "<tr>" +
-                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                    "<td>" + testResult.getName() + "</td>" +
-                                    "<td>" + "No test case currently" + "</td>" +
-                                    "<td>" + "No test case currently" + " </td>" +
-                                    "</tr>");
-
-                }
-                map.put(testResult.getName(), "demoValue");
+            if (testResult.getParameters().length != 0) {
+                PassedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + testResult.getParameters()[0].toString() + "</td>" +
+                                "<td>" + testResult.getParameters()[1].toString() + " </td>" +
+                                "</tr>");
+            } else {
+                PassedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + "No test case currently" + "</td>" +
+                                "<td>" + "No test case currently" + " </td>" +
+                                "</tr>");
             }
+
         }
         PassedTestsReport.concat("</table>");
     }
 
     private void writeFailedTestReport(@NotNull ITestContext tc) {
-        int errorIndex = 0;
-        Map<String, String> map = new HashMap<String, String>();
         FailedTestsReport.concat(
                 "<h2>Suite:" + tc.getName() + "</h2>" +
                         "<table style=\"width:100%\">" +
                         "<tr>" +
                         "<th>Class Name</th>" +
                         "<th>Test Name</th>" +
-                        "<th>Description</th>" +
                         "<th>Test Case Number</th>" +
+                        "<th>Test Description</th>" +
                         "<th>Reason</th>" +
                         "</tr>");
         for (ITestResult testResult : tc.getFailedTests().getAllResults()) {
-            List<Integer> FailedInvocationList = testResult.getMethod().getFailedInvocationNumbers();
-            if (!(map.containsKey(testResult.getName()))) {
-                if (testResult.getParameters().length != 0) {
-                    for (int index : FailedInvocationList) {
-                        FailedTestsReport.concat(
-                                "<tr>" +
-                                        "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                        "<td>" + testResult.getName() + "</td>" +
-                                        "<td>" + ExcelDataProvider.excelData.get(index).get(2) + "</td>" +
-                                        "<td>" + ExcelDataProvider.excelData.get(index).get(1) + " </td>" +
-                                        "<td>" + ((ITestResult) tc.getFailedTests().getAllResults().toArray()[errorIndex]).getThrowable() + " </td>" +
-                                        "</tr>");
-                        ExcelDataProvider.excelData.get(index).set(3, "failed");
-                        errorIndex++;
-                    }
-                    errorIndex = 0;
+            if (testResult.getParameters().length != 0) {
+                FailedTestsReport.concat(
+                        "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + testResult.getParameters()[0].toString() + "</td>" +
+                                "<td>" + testResult.getParameters()[1].toString() + " </td>" +
+                                "<td>" + testResult.getThrowable() + " </td>" +
+                                "</tr>");
 
-                } else {
-                    FailedTestsReport.concat(
-                            "</tr>" +
-                                    "<tr>" +
-                                    "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
-                                    "<td>" + testResult.getName() + "</td>" +
-                                    "<td>" + "No test case currently" + "</td>" +
-                                    "<td>" + "No test case currently" + " </td>" +
-                                    "<td>" + testResult.getThrowable() + " </td>" +
-                                    "</tr>");
-                }
-                map.put(testResult.getName(), "demoValue");
+            } else {
+                FailedTestsReport.concat(
+                        "</tr>" +
+                                "<tr>" +
+                                "<td>" + testResult.getTestClass().getName().substring(16) + "</td>" +
+                                "<td>" + testResult.getName() + "</td>" +
+                                "<td>" + "No test case currently" + "</td>" +
+                                "<td>" + "No test case currently" + " </td>" +
+                                "<td>" + testResult.getThrowable() + " </td>" +
+                                "</tr>");
             }
         }
         FailedTestsReport.concat("</table>");

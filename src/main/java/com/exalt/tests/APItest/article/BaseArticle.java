@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 @Test
 public class BaseArticle {
 
-    protected JSONObject response;
 
     @BeforeClass
     @Parameters("browser")

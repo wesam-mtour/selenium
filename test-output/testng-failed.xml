@@ -7,15 +7,15 @@
   </listeners>
   <test thread-count="5" name="api test (failed)">
     <classes>
-      <class name="com.exalt.tests.APItest.login.LoginWithInvalidCredentialsTest">
+      <class name="com.exalt.tests.APItest.login.LoginWithValidCredentialsTest">
         <methods>
-          <include name="loginWithInvalidCredentialsTest" invocation-numbers="0"/>
+          <include name="afterMethod"/>
           <include name="beforeMethod"/>
           <include name="tearDown"/>
           <include name="setup"/>
-          <include name="afterMethod"/>
+          <include name="loginWithValidCredentialsTest" invocation-numbers="1"/>
         </methods>
-      </class> <!-- com.exalt.tests.APItest.login.LoginWithInvalidCredentialsTest -->
+      </class> <!-- com.exalt.tests.APItest.login.LoginWithValidCredentialsTest -->
     </classes>
   </test> <!-- api test (failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->

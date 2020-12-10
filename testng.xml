@@ -7,7 +7,7 @@
     <parameter name="browser" value="Chrome"></parameter>
     <test name="api test ">
         <classes>
-            <class name="com.exalt.tests.APItest.login.LoginWithInvalidCredentialsTest"></class>
+            <class name="com.exalt.tests.APItest.login.LoginWithValidCredentialsTest"></class>
         </classes>
     </test>
 </suite>

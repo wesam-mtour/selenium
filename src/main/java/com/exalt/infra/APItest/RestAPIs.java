@@ -63,27 +63,7 @@ public class RestAPIs {
     }
 
     public static JSONObject POST(String url, JSONObject jsonRequestObject) throws IOException {
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost(url);
-        httppost.addHeader("Content-Type", "application/json; utf-8");
-        httppost.addHeader("Accept", "application/json");
-        httppost.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36");
-        StringEntity params = new StringEntity(jsonRequestObject.toString());
-        httppost.setEntity((params));
-        HttpResponse response = httpclient.execute(httppost);
-        HttpEntity entity = response.getEntity();
-        StringBuffer result = new StringBuffer();
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        if (entity != null) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-        }
-        JSONObject jsonResponseObject = new JSONObject(result.toString());
-        httppost.releaseConnection();
-        return jsonResponseObject;
+       return POST(url, jsonRequestObject,"");
     }
 
     @NotNull
@@ -113,7 +93,7 @@ public class RestAPIs {
     }
 
     @NotNull
-    public static JSONObject invalidPOST(String url, @NotNull JSONObject jsonRequestObject, String token) throws IOException {
+    public static HttpResponse invalidPOST(String url, @NotNull JSONObject jsonRequestObject, String token) throws IOException {
         HttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost(url);
         httppost.addHeader("Content-Type", "application/json; utf-8");
@@ -123,18 +103,6 @@ public class RestAPIs {
         StringEntity params = new StringEntity(jsonRequestObject.toString());
         httppost.setEntity((params));
         HttpResponse response = httpclient.execute(httppost);
-        HttpEntity entity = response.getEntity();
-        StringBuffer result = new StringBuffer();
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 422);
-        if (entity != null) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-        }
-        JSONObject jsonResponseObject = new JSONObject(result.toString());
-        httppost.releaseConnection();
-        return jsonResponseObject;
+        return response;
     }
 }

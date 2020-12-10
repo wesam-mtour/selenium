@@ -11,9 +11,6 @@ import org.testng.annotations.Test;
 @Test(dataProvider = "Excel", dataProviderClass = ExcelDataProvider.class)
 public class BaseLogin {
 
-    RestAPIs restAPIs = new RestAPIs();
-    protected final String LOGIN_URL = "https://conduit.productionready.io/api/users/login";
-    protected JSONObject response;
 
     @BeforeClass
     public void setup() {

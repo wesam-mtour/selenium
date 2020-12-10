@@ -7,19 +7,13 @@ import org.testng.annotations.DataProvider;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public final class ExcelDataProvider {
 
-    public static Map<Integer, ArrayList<String>> excelData = new HashMap<Integer, ArrayList<String>>();
 
     @NotNull
     @DataProvider(name = "Excel")
     public static Object[][] getData(@NotNull Method method) throws IOException {
-        excelData.clear();
         /*
          Create a DataFormatter to format and get each cell's exact value as String
          */
@@ -46,7 +40,7 @@ public final class ExcelDataProvider {
             }
         }
         int numberOfColumnsInSheet = sheet.getRow(0).getLastCellNum();
-        Object[][] data = new Object[numberOfRowsInSheet][numberOfColumnsInSheet - 3];
+        Object[][] data = new Object[numberOfRowsInSheet][numberOfColumnsInSheet-1];
         /*
         i started from 1 to ignore the first row in the sheet
          */
@@ -54,20 +48,12 @@ public final class ExcelDataProvider {
         for (int i = 1; i <= sheet.getLastRowNum(); ++i) {
             row = sheet.getRow(i);
             if ((dataFormatter.formatCellValue(row.getCell(0))).equals("yes")) {
-                excelData.put(index - 1, new ArrayList<String>(Arrays.asList(
-                        dataFormatter.formatCellValue(row.getCell(0)),
-                        dataFormatter.formatCellValue(row.getCell(1)),
-                        dataFormatter.formatCellValue(row.getCell(2)),
-                        "pass")));
-                for (int j = 0; j < numberOfColumnsInSheet - 3; ++j) {
-                    data[index - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 3));
+                for (int j = 0; j < numberOfColumnsInSheet -1; ++j) {
+                    data[index - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 1));
                 }
                 index++;
             }
         }
-        /*
-         Closing the workbook
-         */
         workbook.close();
         return data;
     }
