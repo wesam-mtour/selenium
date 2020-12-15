@@ -40,15 +40,15 @@ public final class ExcelDataProvider {
             }
         }
         int numberOfColumnsInSheet = sheet.getRow(0).getLastCellNum();
-        Object[][] data = new Object[numberOfRowsInSheet][numberOfColumnsInSheet-1];
+        Object[][] data = new Object[numberOfRowsInSheet][numberOfColumnsInSheet - 1];
         /*
-        i started from 1 to ignore the first row in the sheet
+         started from 1 to ignore the first row in the sheet
          */
         int index = 1;
         for (int i = 1; i <= sheet.getLastRowNum(); ++i) {
             row = sheet.getRow(i);
             if ((dataFormatter.formatCellValue(row.getCell(0))).equals("yes")) {
-                for (int j = 0; j < numberOfColumnsInSheet -1; ++j) {
+                for (int j = 0; j < numberOfColumnsInSheet - 1; ++j) {
                     data[index - 1][j] = dataFormatter.formatCellValue(row.getCell(j + 1));
                 }
                 index++;

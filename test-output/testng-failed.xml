@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [All Test Suite]">
-  <parameter name="browser" value="Chrome"/>
+<suite thread-count="1" guice-stage="DEVELOPMENT" name="Failed suite [All Test Suite]" parallel="methods">
   <listeners>
     <listener class-name="com.exalt.report.listeners.ReporterListener"/>
   </listeners>
-  <test thread-count="5" name="api test (failed)">
+  <test thread-count="1" name="login API test (failed)" parallel="methods">
     <classes>
-      <class name="com.exalt.tests.APItest.login.LoginWithValidCredentialsTest">
+      <class name="com.exalt.tests.APItest.article.GetArticleTest">
         <methods>
-          <include name="afterMethod"/>
           <include name="beforeMethod"/>
           <include name="tearDown"/>
+          <include name="afterMethod"/>
           <include name="setup"/>
-          <include name="loginWithValidCredentialsTest" invocation-numbers="1"/>
+          <include name="invalidGetArticleTest" invocation-numbers="0"/>
         </methods>
-      </class> <!-- com.exalt.tests.APItest.login.LoginWithValidCredentialsTest -->
+      </class> <!-- com.exalt.tests.APItest.article.GetArticleTest -->
     </classes>
-  </test> <!-- api test (failed) -->
+  </test> <!-- login API test (failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->

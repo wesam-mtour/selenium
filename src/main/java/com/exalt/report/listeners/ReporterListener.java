@@ -48,7 +48,7 @@ public class ReporterListener implements IReporter {
                 /*
                 skipped test report not completed, has many arguments to be improve
                  */
-                // writeSkippedTestReport( tc);
+                 writeSkippedTestReport( tc);
             }
         }
         /*
@@ -94,8 +94,6 @@ public class ReporterListener implements IReporter {
                                 "<td>" + testResult.getName() + "</td>" +
                                 "<td>" + "No test case currently" + " </td>" +
                                 "<td>" + "No test case currently" + "</td>" +
-                                "<td>" + "No test case currently" + " </td>" +
-
                                 "</tr>");
             }
 

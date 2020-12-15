@@ -17,7 +17,7 @@ public class LoginInfra {
     @NotNull
     public static JSONObject login(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
-        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject);
+        JSONObject response = RestAPIs.post(LOGIN_URL, jsonObject);
         return response;
     }
 
@@ -25,7 +25,7 @@ public class LoginInfra {
     public static HttpResponse invalidLogin(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
         String token = "";
-        HttpResponse response = RestAPIs.invalidPOST(LOGIN_URL, jsonObject, token);
+        HttpResponse response = RestAPIs.invalidPost(LOGIN_URL, jsonObject, token);
         return response;
     }
 
@@ -33,7 +33,7 @@ public class LoginInfra {
     @NotNull
     public static String getToken(String email, String password) throws IOException {
         JSONObject jsonObject = loadToJSON(email, password);
-        JSONObject response = RestAPIs.POST(LOGIN_URL, jsonObject);
+        JSONObject response = RestAPIs.post(LOGIN_URL, jsonObject);
         String generatedToken = response.getJSONObject("user").getString("token");
         return generatedToken;
     }
